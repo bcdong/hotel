@@ -1,2 +1,3 @@
 # hotel
-j2ee cource final lab
+j2ee course final lab.
+Authored by dbc. 
