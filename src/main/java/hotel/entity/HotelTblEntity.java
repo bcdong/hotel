@@ -1,0 +1,111 @@
+package hotel.entity;
+
+import hotel.type.HotelState;
+
+import javax.persistence.*;
+import java.util.Collection;
+
+/**
+ * Created by Mr.Zero on 2017/3/1.
+ */
+@Entity
+@Table(name = "hotel_tbl", schema = "hotel", catalog = "")
+public class HotelTblEntity {
+    private String id;
+    private String name;
+    private HotelState state;
+    private ManagerTblEntity managerTblByManagerId;
+    private Collection<OrderTblEntity> orderTblsById;
+    private Collection<PlanTblEntity> planTblsById;
+    private Collection<RoomTblEntity> roomTblsById;
+
+    @Id
+    @Column(name = "id", nullable = false, length = 16)
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "name", nullable = false, length = 255)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false, length = 32)
+    public HotelState getState() {
+        return state;
+    }
+
+    public void setState(HotelState state) {
+        this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HotelTblEntity that = (HotelTblEntity) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        return result;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id", referencedColumnName = "id")
+    public ManagerTblEntity getManagerTblByManagerId() {
+        return managerTblByManagerId;
+    }
+
+    public void setManagerTblByManagerId(ManagerTblEntity managerTblByManagerId) {
+        this.managerTblByManagerId = managerTblByManagerId;
+    }
+
+    @OneToMany(mappedBy = "hotelTblByHotelId")
+    public Collection<OrderTblEntity> getOrderTblsById() {
+        return orderTblsById;
+    }
+
+    public void setOrderTblsById(Collection<OrderTblEntity> orderTblsById) {
+        this.orderTblsById = orderTblsById;
+    }
+
+    @OneToMany(mappedBy = "hotelTblByHotelId")
+    public Collection<PlanTblEntity> getPlanTblsById() {
+        return planTblsById;
+    }
+
+    public void setPlanTblsById(Collection<PlanTblEntity> planTblsById) {
+        this.planTblsById = planTblsById;
+    }
+
+    @OneToMany(mappedBy = "hotelTblByHotelId")
+    public Collection<RoomTblEntity> getRoomTblsById() {
+        return roomTblsById;
+    }
+
+    public void setRoomTblsById(Collection<RoomTblEntity> roomTblsById) {
+        this.roomTblsById = roomTblsById;
+    }
+}
