@@ -24,4 +24,18 @@ public class HotelServiceImpl implements HotelService {
     public List<HotelTblEntity> getAllHotels() {
         return hotelDao.getAllHotels();
     }
+
+    public HotelTblEntity getHotel(String id) {
+        HotelTblEntity hotel = null;
+        if (id != null) {
+            try{
+                Integer hotelId = Integer.parseInt(id);
+                hotel = hotelDao.getHotel(hotelId);
+            } catch (NumberFormatException e) {
+                //log
+            }
+
+        }
+        return hotel;
+    }
 }

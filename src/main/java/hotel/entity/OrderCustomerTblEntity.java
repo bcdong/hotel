@@ -3,7 +3,7 @@ package hotel.entity;
 import javax.persistence.*;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 @Entity
 @Table(name = "order_customer_tbl", schema = "hotel", catalog = "")

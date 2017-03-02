@@ -30,16 +30,17 @@ public class HotelDaoImpl implements HotelDao{
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery("from HotelTblEntity ");
         List<HotelTblEntity> hotels = query.list();
-        for (HotelTblEntity entity : hotels) {
-            Hibernate.initialize(entity.getPlanTblsById());
-        }
         tx.commit();
         session.close();
         return hotels;
     }
 
-    public HotelTblEntity getHotel(String id) {
-        return null;
+    public HotelTblEntity getHotel(int id) {
+        Session session = sessionFactory.openSession();
+        HotelTblEntity entity = session.get(HotelTblEntity.class, id);
+        Hibernate.initialize(entity.getPlanTblsById());
+        session.close();
+        return entity;
     }
 
 }

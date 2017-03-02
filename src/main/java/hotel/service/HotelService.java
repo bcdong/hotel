@@ -11,4 +11,6 @@ public interface HotelService {
 
     public List<HotelTblEntity> getAllHotels();
 
+    public HotelTblEntity getHotel(String id);
+
 }

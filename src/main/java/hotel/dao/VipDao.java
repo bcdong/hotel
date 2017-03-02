@@ -7,7 +7,9 @@ import hotel.entity.VipTblEntity;
  */
 public interface VipDao {
 
-    public boolean addVip(VipTblEntity vipTblEntity);
+    public VipTblEntity addVip(VipTblEntity vipTblEntity);
 
-    public VipTblEntity getVip(String id);
+    public VipTblEntity getVipById(int id);
+
+    public VipTblEntity getVipByUsername(String username);
 }

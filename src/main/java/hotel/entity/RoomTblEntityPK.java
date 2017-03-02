@@ -5,19 +5,19 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 public class RoomTblEntityPK implements Serializable {
-    private String hotelId;
+    private int hotelId;
     private String roomId;
 
-    @Column(name = "hotel_id", nullable = false, length = 16)
+    @Column(name = "hotel_id", nullable = false)
     @Id
-    public String getHotelId() {
+    public int getHotelId() {
         return hotelId;
     }
 
-    public void setHotelId(String hotelId) {
+    public void setHotelId(int hotelId) {
         this.hotelId = hotelId;
     }
 
@@ -38,7 +38,7 @@ public class RoomTblEntityPK implements Serializable {
 
         RoomTblEntityPK that = (RoomTblEntityPK) o;
 
-        if (hotelId != null ? !hotelId.equals(that.hotelId) : that.hotelId != null) return false;
+        if (hotelId != that.hotelId) return false;
         if (roomId != null ? !roomId.equals(that.roomId) : that.roomId != null) return false;
 
         return true;
@@ -46,7 +46,7 @@ public class RoomTblEntityPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = hotelId != null ? hotelId.hashCode() : 0;
+        int result = hotelId;
         result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
         return result;
     }

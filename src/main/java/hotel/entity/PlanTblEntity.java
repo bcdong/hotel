@@ -5,7 +5,7 @@ import hotel.type.RoomType;
 import javax.persistence.*;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 @Entity
 @Table(name = "plan_tbl", schema = "hotel", catalog = "")
@@ -17,6 +17,7 @@ public class PlanTblEntity {
     private HotelTblEntity hotelTblByHotelId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
@@ -27,7 +28,7 @@ public class PlanTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "room_type", nullable = true, length = 32)
     public RoomType getRoomType() {
         return roomType;
@@ -81,7 +82,7 @@ public class PlanTblEntity {
         return result;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "hotel_id", referencedColumnName = "id", nullable = false)
     public HotelTblEntity getHotelTblByHotelId() {
         return hotelTblByHotelId;

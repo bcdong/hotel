@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface HotelDao {
 
-    public HotelTblEntity getHotel(String id);
+    public HotelTblEntity getHotel(int id);
 
     public List<HotelTblEntity> getAllHotels();
 

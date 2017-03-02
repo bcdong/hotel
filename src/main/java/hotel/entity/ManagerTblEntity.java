@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 @Entity
 @Table(name = "manager_tbl", schema = "hotel", catalog = "")
@@ -19,6 +19,7 @@ public class ManagerTblEntity {
     private Collection<HotelTblEntity> hotelTblsById;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
@@ -59,7 +60,7 @@ public class ManagerTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "type", nullable = false, length = 32)
     public ManagerType getType() {
         return type;

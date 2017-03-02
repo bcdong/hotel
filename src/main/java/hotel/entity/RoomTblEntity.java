@@ -6,27 +6,26 @@ import hotel.type.RoomType;
 import javax.persistence.*;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 @Entity
 @Table(name = "room_tbl", schema = "hotel", catalog = "")
 @IdClass(RoomTblEntityPK.class)
 public class RoomTblEntity {
-    private String hotelId;
+    private int hotelId;
     private String roomId;
     private RoomState state;
     private RoomType type;
     private Integer capacity;
-    private OrderTblEntity orderTblByRoomId;
     private HotelTblEntity hotelTblByHotelId;
 
     @Id
-    @Column(name = "hotel_id", nullable = false, length = 16)
-    public String getHotelId() {
+    @Column(name = "hotel_id", nullable = false)
+    public int getHotelId() {
         return hotelId;
     }
 
-    public void setHotelId(String hotelId) {
+    public void setHotelId(int hotelId) {
         this.hotelId = hotelId;
     }
 
@@ -41,7 +40,7 @@ public class RoomTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false, length = 32)
     public RoomState getState() {
         return state;
@@ -52,7 +51,7 @@ public class RoomTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "type", nullable = true, length = 32)
     public RoomType getType() {
         return type;
@@ -79,7 +78,7 @@ public class RoomTblEntity {
 
         RoomTblEntity that = (RoomTblEntity) o;
 
-        if (hotelId != null ? !hotelId.equals(that.hotelId) : that.hotelId != null) return false;
+        if (hotelId != that.hotelId) return false;
         if (roomId != null ? !roomId.equals(that.roomId) : that.roomId != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
@@ -90,22 +89,12 @@ public class RoomTblEntity {
 
     @Override
     public int hashCode() {
-        int result = hotelId != null ? hotelId.hashCode() : 0;
+        int result = hotelId;
         result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (capacity != null ? capacity.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "room_id", nullable = false)
-    public OrderTblEntity getOrderTblByRoomId() {
-        return orderTblByRoomId;
-    }
-
-    public void setOrderTblByRoomId(OrderTblEntity orderTblByRoomId) {
-        this.orderTblByRoomId = orderTblByRoomId;
     }
 
     @ManyToOne

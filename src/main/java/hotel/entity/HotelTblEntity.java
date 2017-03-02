@@ -6,12 +6,12 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 @Entity
 @Table(name = "hotel_tbl", schema = "hotel", catalog = "")
 public class HotelTblEntity {
-    private String id;
+    private int id;
     private String name;
     private HotelState state;
     private ManagerTblEntity managerTblByManagerId;
@@ -20,12 +20,13 @@ public class HotelTblEntity {
     private Collection<RoomTblEntity> roomTblsById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 16)
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,7 +41,7 @@ public class HotelTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false, length = 32)
     public HotelState getState() {
         return state;
@@ -55,18 +56,18 @@ public class HotelTblEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        HotelTblEntity that = (HotelTblEntity) o;
+        HotelTblEntity entity = (HotelTblEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (id != entity.id) return false;
+        if (name != null ? !name.equals(entity.name) : entity.name != null) return false;
+        if (state != null ? !state.equals(entity.state) : entity.state != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;

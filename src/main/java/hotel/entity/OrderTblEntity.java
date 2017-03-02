@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 @Entity
 @Table(name = "order_tbl", schema = "hotel", catalog = "")
@@ -22,8 +22,10 @@ public class OrderTblEntity {
     private Collection<OrderCustomerTblEntity> orderCustomerTblsById;
     private VipTblEntity vipTblByVipId;
     private HotelTblEntity hotelTblByHotelId;
+    private RoomTblEntity roomTblEntity;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
@@ -54,7 +56,7 @@ public class OrderTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false, length = 32)
     public OrderState getState() {
         return state;
@@ -75,7 +77,7 @@ public class OrderTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "pay_method", nullable = false, length = 32)
     public PayMethod getPayMethod() {
         return payMethod;
@@ -116,7 +118,7 @@ public class OrderTblEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "orderTblByOrderId")
+    @OneToMany(mappedBy = "orderTblByOrderId", fetch = FetchType.EAGER)
     public Collection<OrderCustomerTblEntity> getOrderCustomerTblsById() {
         return orderCustomerTblsById;
     }
@@ -143,5 +145,18 @@ public class OrderTblEntity {
 
     public void setHotelTblByHotelId(HotelTblEntity hotelTblByHotelId) {
         this.hotelTblByHotelId = hotelTblByHotelId;
+    }
+
+    @ManyToOne
+    @JoinColumns(value = {
+            @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id"),
+            @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+    })
+    public RoomTblEntity getRoomTblByHotelIdAndRoomId() {
+        return roomTblEntity;
+    }
+
+    public void setRoomTblByHotelIdAndRoomId(RoomTblEntity roomTblEntityByHotelIdAndRoomId) {
+        this.roomTblEntity = roomTblEntityByHotelIdAndRoomId;
     }
 }

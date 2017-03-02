@@ -6,27 +6,31 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by Mr.Zero on 2017/3/1.
+ * Created by Mr.Zero on 2017/3/2.
  */
 @Entity
 @Table(name = "vip_tbl", schema = "hotel", catalog = "")
 public class VipTblEntity {
-    private String id;
+    private int id;
     private String name;
     private double balance;
     private int level;
     private int experience;
     private int score;
+    private String bankId;
     private VipState state;
+    private String username;
+    private String password;
     private Collection<OrderTblEntity> orderTblsById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 16)
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -81,7 +85,7 @@ public class VipTblEntity {
     }
 
     @Basic
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false, length = 32)
     public VipState getState() {
         return state;
@@ -91,6 +95,36 @@ public class VipTblEntity {
         this.state = state;
     }
 
+    @Basic
+    @Column(name = "username", nullable = false, length = 255)
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Basic
+    @Column(name = "password", length = 255)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Basic
+    @Column(name = "bank_id", nullable = false, length = 31)
+    public String getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(String bankId) {
+        this.bankId = bankId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,13 +132,16 @@ public class VipTblEntity {
 
         VipTblEntity that = (VipTblEntity) o;
 
+        if (id != that.id) return false;
         if (Double.compare(that.balance, balance) != 0) return false;
         if (level != that.level) return false;
         if (experience != that.experience) return false;
         if (score != that.score) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (bankId != null ? !bankId.equals(that.bankId) : that.bankId != null) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
 
         return true;
     }
@@ -113,7 +150,7 @@ public class VipTblEntity {
     public int hashCode() {
         int result;
         long temp;
-        result = id != null ? id.hashCode() : 0;
+        result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         temp = Double.doubleToLongBits(balance);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
@@ -121,6 +158,9 @@ public class VipTblEntity {
         result = 31 * result + experience;
         result = 31 * result + score;
         result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (bankId != null ? bankId.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 
