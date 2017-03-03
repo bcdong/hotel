@@ -15,6 +15,7 @@ import javax.validation.Valid;
 
 /**
  * Created by Mr.Zero on 2017/3/2.
+ * This controller handles request about vip information
  */
 @Controller
 @RequestMapping(value = "/vip")
