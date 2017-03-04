@@ -12,7 +12,7 @@ public class VipVO implements Serializable {
 
     private String id;
 
-    @NotNull(message = "姓名不能为空")
+    @Size(min = 1, message = "姓名不能为空")
     private String name;
     private double balance;
     private int level;

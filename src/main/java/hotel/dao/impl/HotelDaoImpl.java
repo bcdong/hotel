@@ -27,10 +27,8 @@ public class HotelDaoImpl implements HotelDao{
 
     public List<HotelTblEntity> getAllHotels() {
         Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
         Query query = session.createQuery("from HotelTblEntity ");
         List<HotelTblEntity> hotels = query.list();
-        tx.commit();
         session.close();
         return hotels;
     }

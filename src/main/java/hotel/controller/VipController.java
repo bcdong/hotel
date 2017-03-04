@@ -32,4 +32,9 @@ public class VipController {
         //vip info is already in HttpSession
         return "vipInfo";
     }
+
+
+    public String bookHotel() {
+        return "";
+    }
 }

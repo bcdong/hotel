@@ -12,14 +12,11 @@
     
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/auth/**" />
-            <mvc:exclude-mapping path="/manager/**" />
+            <mvc:mapping path="/vip/**"/>
             <bean class="hotel.interceptor.VipInterceptor" />
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/manager/**"/>
-            <mvc:exclude-mapping path="/auth/**" />
             <bean class="hotel.interceptor.ManagerInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

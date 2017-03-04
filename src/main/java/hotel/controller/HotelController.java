@@ -18,11 +18,11 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/hotel")
-public class HotelBookController {
+public class HotelController {
     private HotelService hotelService;
 
     @Autowired
-    public HotelBookController(HotelService hotelService) {
+    public HotelController(HotelService hotelService) {
         this.hotelService = hotelService;
     }
 

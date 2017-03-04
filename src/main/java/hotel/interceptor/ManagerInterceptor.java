@@ -17,7 +17,7 @@ public class ManagerInterceptor implements HandlerInterceptor {
             return true;
         }
         else {
-            httpServletRequest.getRequestDispatcher("/auth/login").forward(httpServletRequest, httpServletResponse);
+            httpServletResponse.sendRedirect("/auth/login");
             return false;
         }
     }
