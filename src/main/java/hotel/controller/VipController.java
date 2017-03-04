@@ -27,53 +27,6 @@ public class VipController {
         this.vipService = vipService;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLogin(Model model){
-        model.addAttribute("loginForm", new LoginForm());
-        return "login";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String postLogin(@Valid LoginForm loginForm, Errors errors, Model model, HttpSession session){
-        if (errors.hasErrors()){
-            return "login";
-        }
-        String username = loginForm.getUsername();
-        String password = loginForm.getPassword();
-        VipVO vo = vipService.login(username, password);
-        if (vo == null) {
-            model.addAttribute("errorPassword", "对比起，密码错误");
-            return "login";
-        }
-        else {
-            session.setAttribute("vipInfo", vo);
-            return "redirect:/hotel";
-        }
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String getRegister(Model model){
-        VipVO vipVO = new VipVO();
-        model.addAttribute("vip", vipVO);
-        return "register";
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String postRegister(@Valid VipVO vip, Errors errors, Model model, HttpSession session) {
-        if (errors.hasErrors()) {
-            return "register";
-        }
-        VipVO resultVO = vipService.register(vip);
-        if (resultVO == null){
-            model.addAttribute("duplicateUsername", "该用户名已存在");
-            return "register";
-        }
-        else {
-            session.setAttribute("vipInfo", resultVO);
-            return "forward:/vip/info";
-        }
-    }
-
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String getVipInfo(){
         //vip info is already in HttpSession

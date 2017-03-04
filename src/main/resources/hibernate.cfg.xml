@@ -6,6 +6,8 @@
     <session-factory>
         <property name="connection.url">jdbc:mysql://localhost:3306/hotel</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">harry</property>
+        <property name="connection.password">Temp_Pass</property>
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="show_sql">true</property>
         <property name="hibernate.connection.autocommit">true</property>

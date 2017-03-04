@@ -2,6 +2,7 @@ package hotel.controller;
 
 import hotel.entity.HotelTblEntity;
 import hotel.service.HotelService;
+import hotel.vo.HotelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ public class HotelBookController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listHotels(Model model) {
-        List<HotelTblEntity> hotels = hotelService.getAllHotels();
+        List<HotelVO> hotels = hotelService.getAllHotels();
         model.addAttribute("hotels", hotels);
         return "hotels";
     }
@@ -35,7 +36,7 @@ public class HotelBookController {
     @RequestMapping(value = "/{hotelId}", method = RequestMethod.GET)
     public String getPlans(@PathVariable(value = "hotelId") String hotelId,
                            Model model){
-        HotelTblEntity hotel = hotelService.getHotel(hotelId);
+        HotelVO hotel = hotelService.getHotel(hotelId);
         model.addAttribute("hotel", hotel);
         return "hotel";
     }

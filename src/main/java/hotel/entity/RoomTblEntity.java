@@ -10,9 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "room_tbl", schema = "hotel", catalog = "")
-@IdClass(RoomTblEntityPK.class)
 public class RoomTblEntity {
-    private int hotelId;
+    private int id;
     private String roomId;
     private RoomState state;
     private RoomType type;
@@ -20,16 +19,17 @@ public class RoomTblEntity {
     private HotelTblEntity hotelTblByHotelId;
 
     @Id
-    @Column(name = "hotel_id", nullable = false)
-    public int getHotelId() {
-        return hotelId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public int getId() {
+        return id;
     }
 
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    @Id
+    @Basic
     @Column(name = "room_id", nullable = false, length = 16)
     public String getRoomId() {
         return roomId;
@@ -78,7 +78,6 @@ public class RoomTblEntity {
 
         RoomTblEntity that = (RoomTblEntity) o;
 
-        if (hotelId != that.hotelId) return false;
         if (roomId != null ? !roomId.equals(that.roomId) : that.roomId != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
@@ -89,7 +88,7 @@ public class RoomTblEntity {
 
     @Override
     public int hashCode() {
-        int result = hotelId;
+        int result = id;
         result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);

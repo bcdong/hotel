@@ -18,11 +18,11 @@ public class OrderTblEntity {
     private Timestamp toTime;
     private OrderState state;
     private double cost;
+    private String roomId;
     private PayMethod payMethod;
     private Collection<OrderCustomerTblEntity> orderCustomerTblsById;
     private VipTblEntity vipTblByVipId;
     private HotelTblEntity hotelTblByHotelId;
-    private RoomTblEntity roomTblEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,8 +77,18 @@ public class OrderTblEntity {
     }
 
     @Basic
+    @Column(name = "room_id", nullable = false, length = 16)
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    @Basic
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "pay_method", nullable = false, length = 32)
+    @Column(name = "pay_method", nullable = false, length = 31)
     public PayMethod getPayMethod() {
         return payMethod;
     }
@@ -99,6 +109,7 @@ public class OrderTblEntity {
         if (fromTime != null ? !fromTime.equals(that.fromTime) : that.fromTime != null) return false;
         if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (roomId != null ? !roomId.equals(that.roomId) : that.roomId != null) return false;
         if (payMethod != null ? !payMethod.equals(that.payMethod) : that.payMethod != null) return false;
 
         return true;
@@ -114,6 +125,7 @@ public class OrderTblEntity {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         temp = Double.doubleToLongBits(cost);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
         result = 31 * result + (payMethod != null ? payMethod.hashCode() : 0);
         return result;
     }
@@ -147,16 +159,4 @@ public class OrderTblEntity {
         this.hotelTblByHotelId = hotelTblByHotelId;
     }
 
-    @ManyToOne
-    @JoinColumns(value = {
-            @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id"),
-            @JoinColumn(name = "room_id", referencedColumnName = "room_id")
-    })
-    public RoomTblEntity getRoomTblByHotelIdAndRoomId() {
-        return roomTblEntity;
-    }
-
-    public void setRoomTblByHotelIdAndRoomId(RoomTblEntity roomTblEntityByHotelIdAndRoomId) {
-        this.roomTblEntity = roomTblEntityByHotelIdAndRoomId;
-    }
 }

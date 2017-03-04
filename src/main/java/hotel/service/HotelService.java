@@ -1,6 +1,7 @@
 package hotel.service;
 
 import hotel.entity.HotelTblEntity;
+import hotel.vo.HotelVO;
 
 import java.util.List;
 
@@ -9,8 +10,8 @@ import java.util.List;
  */
 public interface HotelService {
 
-    public List<HotelTblEntity> getAllHotels();
+    public List<HotelVO> getAllHotels();
 
-    public HotelTblEntity getHotel(String id);
+    public HotelVO getHotel(String id);
 
 }

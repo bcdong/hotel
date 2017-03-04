@@ -25,9 +25,10 @@ public class VipDaoImpl implements VipDao {
 
     public VipTblEntity addVip(VipTblEntity vipTblEntity) {
         Session session = sessionFactory.openSession();
-        VipTblEntity vipPO = (VipTblEntity) session.save(vipTblEntity);
+        Integer id  = (Integer) session.save(vipTblEntity);
+        vipTblEntity.setId(id);
         session.close();
-        return vipPO;
+        return vipTblEntity;
     }
 
     public VipTblEntity getVipById(int id) {

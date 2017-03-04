@@ -106,7 +106,7 @@ public class VipTblEntity {
     }
 
     @Basic
-    @Column(name = "password", length = 255)
+    @Column(name = "password", length = 255, nullable = true)
     public String getPassword() {
         return password;
     }

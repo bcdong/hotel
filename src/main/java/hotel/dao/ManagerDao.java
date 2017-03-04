@@ -7,5 +7,7 @@ import hotel.entity.ManagerTblEntity;
  */
 public interface ManagerDao {
 
-    public ManagerTblEntity login(String username, String password);
+    public ManagerTblEntity getManagerByUsername(String username);
+
+    public ManagerTblEntity addManager(ManagerTblEntity manager);
 }

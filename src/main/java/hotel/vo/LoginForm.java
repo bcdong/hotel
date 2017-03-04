@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
  */
 public class LoginForm {
 
+    //vip或者(manager)管理员
+    private String userType;
+
     @NotNull(message = "用户名不能为空")
     private String username;
 
@@ -27,5 +30,13 @@ public class LoginForm {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

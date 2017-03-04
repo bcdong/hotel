@@ -8,17 +8,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by Mr.Zero on 2017/3/2.
- * check if user has logined
+ * Created by Mr.Zero on 2017/3/4.
  */
-public class LoginInterceptor implements HandlerInterceptor {
+public class ManagerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         HttpSession session = httpServletRequest.getSession();
-        if (session.getAttribute("vipInfo") != null) {
+        if (session.getAttribute("managerInfo") != null) {
             return true;
         }
         else {
-            httpServletRequest.getRequestDispatcher("/vip/login").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("/auth/login").forward(httpServletRequest, httpServletResponse);
             return false;
         }
     }

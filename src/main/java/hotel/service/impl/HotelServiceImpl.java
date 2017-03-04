@@ -3,9 +3,12 @@ package hotel.service.impl;
 import hotel.dao.HotelDao;
 import hotel.entity.HotelTblEntity;
 import hotel.service.HotelService;
+import hotel.util.PO2VO;
+import hotel.vo.HotelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,17 +18,24 @@ import java.util.List;
 public class HotelServiceImpl implements HotelService {
 
     private HotelDao hotelDao;
+    private PO2VO po2VO;
 
     @Autowired
-    public HotelServiceImpl(HotelDao hotelDao) {
+    public HotelServiceImpl(HotelDao hotelDao, PO2VO po2VO) {
         this.hotelDao = hotelDao;
+        this.po2VO = po2VO;
     }
 
-    public List<HotelTblEntity> getAllHotels() {
-        return hotelDao.getAllHotels();
+    public List<HotelVO> getAllHotels() {
+        List<HotelTblEntity> poList =  hotelDao.getAllHotels();
+        List<HotelVO> voList = new ArrayList<HotelVO>();
+        for (HotelTblEntity po : poList) {
+            voList.add(po2VO.hotelPO2VO(po));
+        }
+        return voList;
     }
 
-    public HotelTblEntity getHotel(String id) {
+    public HotelVO getHotel(String id) {
         HotelTblEntity hotel = null;
         if (id != null) {
             try{
@@ -36,6 +46,6 @@ public class HotelServiceImpl implements HotelService {
             }
 
         }
-        return hotel;
+        return po2VO.hotelPO2VO(hotel);
     }
 }
