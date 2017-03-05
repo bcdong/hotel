@@ -30,7 +30,7 @@ public class HotelController {
     public String listHotels(Model model) {
         List<HotelVO> hotels = hotelService.getAllHotels();
         model.addAttribute("hotels", hotels);
-        return "hotels";
+        return "hotel/hotels";
     }
 
     @RequestMapping(value = "/{hotelId}", method = RequestMethod.GET)
@@ -38,6 +38,6 @@ public class HotelController {
                            Model model){
         HotelVO hotel = hotelService.getHotel(hotelId);
         model.addAttribute("hotel", hotel);
-        return "hotel";
+        return "hotel/hotel";
     }
 }

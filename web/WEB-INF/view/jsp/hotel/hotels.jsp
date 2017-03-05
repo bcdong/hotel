@@ -5,15 +5,15 @@
 <html>
 <head>
     <title>Mr Hotel</title>
-    <c:import url="common/style.jsp" />
+    <c:import url="../common/style.jsp" />
 </head>
 <body>
-<c:import url="common/navbar.jsp" />
+<c:import url="../common/navbar.jsp" />
 <c:forEach items="${hotels}" var="hotel">
     <div class="panel panel-info">
         <div class="panel-heading">${hotel.state}</div>
         <div class="panel-body">
-            <a href="/hotel/${hotel.id}">${hotel.name}</a>
+            <h2><a href="/hotel/${hotel.id}">${hotel.name}</a></h2>
         </div>
     </div>
 </c:forEach>

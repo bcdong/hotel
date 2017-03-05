@@ -3,6 +3,7 @@ package hotel.service.impl;
 import hotel.dao.HotelDao;
 import hotel.entity.HotelTblEntity;
 import hotel.service.HotelService;
+import hotel.type.HotelState;
 import hotel.util.PO2VO;
 import hotel.vo.HotelVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,15 @@ public class HotelServiceImpl implements HotelService {
 
         }
         return po2VO.hotelPO2VO(hotel);
+    }
+
+    @Override
+    public HotelVO addHotel(HotelVO hotelVO, int managerId) {
+        HotelTblEntity po = new HotelTblEntity();
+        po.setName(hotelVO.getName());
+        po.setState(HotelState.APPLYING);
+        HotelTblEntity savedPO = hotelDao.addHotel(po, managerId);
+        HotelVO vo = po2VO.hotelPO2VO(savedPO);
+        return vo;
     }
 }

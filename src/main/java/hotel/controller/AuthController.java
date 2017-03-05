@@ -66,7 +66,7 @@ public class AuthController {
             }
             else {
                 session.setAttribute("managerInfo", managerVO);
-                return "redirect:/manager";
+                return "redirect:/sbmanager";
             }
         }
     }

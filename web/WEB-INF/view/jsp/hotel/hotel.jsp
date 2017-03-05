@@ -5,10 +5,10 @@
 <html>
 <head>
     <title>${hotel.name}</title>
-    <c:import url="common/style.jsp" />
+    <c:import url="../common/style.jsp" />
 </head>
 <body>
-<c:import url="common/navbar.jsp" />
+<c:import url="../common/navbar.jsp" />
 <h1 class="bg-info">${hotel.name} <span class="label label-warning">${hotel.state}</span></h1>
 <c:forEach items="${hotel.plans}" var="plan">
     <div class="row thumbnail">

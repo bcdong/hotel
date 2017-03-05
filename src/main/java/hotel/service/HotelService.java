@@ -14,4 +14,6 @@ public interface HotelService {
 
     public HotelVO getHotel(String id);
 
+    public HotelVO addHotel(HotelVO hotelVO, int managerId);
+
 }

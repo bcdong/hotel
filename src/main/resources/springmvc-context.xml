@@ -16,7 +16,7 @@
             <bean class="hotel.interceptor.VipInterceptor" />
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/manager/**"/>
+            <mvc:mapping path="/sbmanager/**"/>
             <bean class="hotel.interceptor.ManagerInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

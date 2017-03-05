@@ -2,6 +2,7 @@ package hotel.dao.impl;
 
 import hotel.dao.HotelDao;
 import hotel.entity.HotelTblEntity;
+import hotel.entity.ManagerTblEntity;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,4 +42,14 @@ public class HotelDaoImpl implements HotelDao{
         return entity;
     }
 
+    @Override
+    public HotelTblEntity addHotel(HotelTblEntity hotelTblEntity, int managerId) {
+        Session session = sessionFactory.openSession();
+        ManagerTblEntity manager = session.get(ManagerTblEntity.class, managerId);
+        hotelTblEntity.setManagerTblByManagerId(manager);
+        Integer hotelId = (Integer) session.save(hotelTblEntity);
+        session.close();
+        hotelTblEntity.setId(hotelId);
+        return hotelTblEntity;
+    }
 }

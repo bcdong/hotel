@@ -24,12 +24,12 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" id="user-name-field" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${vipInfo.name} <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/hotel">退出</a></li>
+                                <li><a href="/auth/logout">退出</a></li>
                             </ul>
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="/vip/login">登录</a></li>
+                        <li><a href="/auth/login">登录</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

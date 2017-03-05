@@ -1,5 +1,6 @@
 package hotel.vo;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -7,6 +8,8 @@ import java.util.List;
  */
 public class HotelVO {
     private String id;
+
+    @Size(min = 1, message = "酒店名称不能为空")
     private String name;
     private String state;
     private List<PlanVO> plans;

@@ -30,7 +30,7 @@ public class VipController {
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String getVipInfo(){
         //vip info is already in HttpSession
-        return "vipInfo";
+        return "vip/vipInfo";
     }
 
 

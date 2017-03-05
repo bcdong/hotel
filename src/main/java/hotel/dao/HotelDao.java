@@ -13,4 +13,6 @@ public interface HotelDao {
 
     public List<HotelTblEntity> getAllHotels();
 
+    public HotelTblEntity addHotel(HotelTblEntity hotelTblEntity, int managerId);
+
 }

@@ -85,8 +85,14 @@ public class PO2VO {
             case OPEN:state = "营业中";break;
         }
         vo.setState(state);
+
+        return vo;
+    }
+
+    public HotelVO hotelPO2VOWithPlan(HotelTblEntity po) {
+        HotelVO vo = hotelPO2VO(po);
         Collection<PlanTblEntity> planPOs = po.getPlanTblsById();
-        if (planPOs != null) {
+        if (planPOs != null && planPOs.size() > 0) {
             List<PlanVO> planVOS = new ArrayList<PlanVO>();
             for (PlanTblEntity planPO : po.getPlanTblsById()){
                 planVOS.add(planPO2VO(planPO));
