@@ -102,6 +102,12 @@ public class PO2VO {
         return vo;
     }
 
+    public HotelVO hotelPO2VOWithManager(HotelTblEntity po) {
+        HotelVO vo = hotelPO2VO(po);
+        vo.setManagerName(po.getManagerTblByManagerId().getName());
+        return vo;
+    }
+
     public ManagerVO managerPO2VO(ManagerTblEntity po) {
         if (po == null) {
             return null;

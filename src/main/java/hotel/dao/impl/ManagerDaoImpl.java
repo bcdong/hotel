@@ -5,6 +5,7 @@ import hotel.entity.ManagerTblEntity;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,11 +40,19 @@ public class ManagerDaoImpl implements ManagerDao {
         return null;
     }
 
-    public ManagerTblEntity addManager(ManagerTblEntity manager) {
+    public boolean addManager(ManagerTblEntity manager) {
+        boolean result = false;
         Session session = sessionFactory.openSession();
-        Integer id = (Integer) session.save(manager);
+        Transaction tx = session.beginTransaction();
+        Query query = session.createQuery("from ManagerTblEntity where username = :uname ");
+        query.setParameter("uname", manager.getUsername());
+        List list = query.list();
+        if (list.size() == 0) {
+            Integer id = (Integer) session.save(manager);
+            result = true;
+        }
+        tx.commit();
         session.close();
-        manager.setId(id);
-        return manager;
+        return result;
     }
 }

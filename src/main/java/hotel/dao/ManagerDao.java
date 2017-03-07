@@ -9,5 +9,5 @@ public interface ManagerDao {
 
     public ManagerTblEntity getManagerByUsername(String username);
 
-    public ManagerTblEntity addManager(ManagerTblEntity manager);
+    public boolean addManager(ManagerTblEntity manager);
 }

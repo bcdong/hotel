@@ -28,7 +28,7 @@ public class HotelController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listHotels(Model model) {
-        List<HotelVO> hotels = hotelService.getAllHotels();
+        List<HotelVO> hotels = hotelService.getOpenHotels();
         model.addAttribute("hotels", hotels);
         return "hotel/hotels";
     }

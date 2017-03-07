@@ -40,7 +40,7 @@
     </div>
     <div class="content">
         <div class="content-header">
-            <h1>酒店管理</h1>
+            <h1>开店申请</h1>
             <p>经理: ${managerInfo.name}    酒店名称:
                 <c:choose>
                     <c:when test="${managerInfo.hotel == null}">

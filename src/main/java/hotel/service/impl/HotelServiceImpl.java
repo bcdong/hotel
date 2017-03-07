@@ -5,6 +5,7 @@ import hotel.entity.HotelTblEntity;
 import hotel.service.HotelService;
 import hotel.type.HotelState;
 import hotel.util.PO2VO;
+import hotel.vo.HotelPlanForm;
 import hotel.vo.HotelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,16 @@ public class HotelServiceImpl implements HotelService {
         return voList;
     }
 
+    @Override
+    public List<HotelVO> getOpenHotels() {
+        List<HotelTblEntity> poList =  hotelDao.getOpenHotels();
+        List<HotelVO> voList = new ArrayList<HotelVO>();
+        for (HotelTblEntity po : poList) {
+            voList.add(po2VO.hotelPO2VO(po));
+        }
+        return voList;
+    }
+
     public HotelVO getHotel(String id) {
         HotelTblEntity hotel = null;
         if (id != null) {
@@ -47,7 +58,7 @@ public class HotelServiceImpl implements HotelService {
             }
 
         }
-        return po2VO.hotelPO2VO(hotel);
+        return po2VO.hotelPO2VOWithPlan(hotel);
     }
 
     @Override
@@ -58,5 +69,32 @@ public class HotelServiceImpl implements HotelService {
         HotelTblEntity savedPO = hotelDao.addHotel(po, managerId);
         HotelVO vo = po2VO.hotelPO2VO(savedPO);
         return vo;
+    }
+
+    @Override
+    public boolean updatePlan(HotelPlanForm planForm) {
+        return hotelDao.updateHotelPlan(planForm);
+    }
+
+    @Override
+    public List<HotelVO> getApplyHotels() {
+        List<HotelTblEntity> poList =  hotelDao.getApplyHotels();
+        List<HotelVO> voList = new ArrayList<HotelVO>();
+        for (HotelTblEntity po : poList) {
+            voList.add(po2VO.hotelPO2VOWithManager(po));
+        }
+        return voList;
+    }
+
+    @Override
+    public List<HotelVO> handleApply(String action, String hotelId) {
+        //null means delete the hotel
+        HotelState hotelState = null;
+        if (action.equals("prove")) {
+            hotelState = HotelState.OPEN;
+        }
+        int id = Integer.parseInt(hotelId);
+        hotelDao.handleApplyHotels(hotelState, id);
+        return getApplyHotels();
     }
 }

@@ -1,6 +1,7 @@
 package hotel.service;
 
 import hotel.entity.ManagerTblEntity;
+import hotel.vo.ManagerForm;
 import hotel.vo.ManagerVO;
 
 /**
@@ -8,4 +9,6 @@ import hotel.vo.ManagerVO;
  */
 public interface ManagerService {
     public ManagerVO login(String username, String password);
+
+    public boolean addManager(ManagerForm form);
 }

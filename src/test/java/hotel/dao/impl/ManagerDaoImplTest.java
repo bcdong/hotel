@@ -37,8 +37,7 @@ public class ManagerDaoImplTest {
         manager.setType(ManagerType.MANAGER);
         manager.setUsername("daixinyan");
         manager.setPassword("1234qwer");
-        ManagerTblEntity savedManager = managerDao.addManager(manager);
-        assertNotNull(savedManager);
+
     }
 
 }

@@ -3,7 +3,9 @@ package hotel.service.impl;
 import hotel.dao.ManagerDao;
 import hotel.entity.ManagerTblEntity;
 import hotel.service.ManagerService;
+import hotel.type.ManagerType;
 import hotel.util.PO2VO;
+import hotel.vo.ManagerForm;
 import hotel.vo.ManagerVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +33,15 @@ public class ManagerServiceImpl implements ManagerService {
         else {
             return null;
         }
+    }
+
+    @Override
+    public boolean addManager(ManagerForm form) {
+        ManagerTblEntity entity = new ManagerTblEntity();
+        entity.setName(form.getName());
+        entity.setUsername(form.getUsername());
+        entity.setPassword(form.getPassword());
+        entity.setType(ManagerType.MANAGER);
+        return managerDao.addManager(entity);
     }
 }

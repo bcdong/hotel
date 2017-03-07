@@ -13,6 +13,7 @@ public class HotelVO {
     private String name;
     private String state;
     private List<PlanVO> plans;
+    private String managerName;
 
     public String getId() {
         return id;
@@ -44,5 +45,13 @@ public class HotelVO {
 
     public void setPlans(List<PlanVO> plans) {
         this.plans = plans;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
     }
 }
