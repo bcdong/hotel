@@ -47,7 +47,7 @@
             </p>
         </div>
         <div class="error">${errorMessage}</div>
-        <div class="success">${successMessage}</div>
+        <div class="success-msg">${successMessage}</div>
         <sf:form action="/topmanager/add-manager" method="POST" commandName="managerForm">
             姓名: <sf:input path="name" /> <sf:errors path="name" cssClass="error" /><br/>
             用户名: <sf:input path="username" /><sf:errors path="username" cssClass="error" /><br/>

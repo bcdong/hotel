@@ -3,10 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>登录</title>
     <c:import url="common/style.jsp" />
 </head>
 <body>
+<c:import url="common/navbar.jsp" />
 <sf:form method="POST" action="/auth/login" commandName="loginForm">
     <div class="error">
         ${errorMessage}
@@ -22,5 +23,6 @@
     <sf:errors path="password" cssClass="error"/><br/>
     <input type="submit" value="登录">
 </sf:form>
+<a href="/auth/register">点我注册VIP</a>
 </body>
 </html>

@@ -4,6 +4,7 @@ import hotel.dao.VipDao;
 import hotel.entity.VipTblEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -50,5 +51,31 @@ public class VipDaoImpl implements VipDao {
         else {
             return null;
         }
+    }
+
+    @Override
+    public boolean updateVip(VipTblEntity entity) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        VipTblEntity ppo = (VipTblEntity) session.merge(entity);
+        tx.commit();
+        session.close();
+        return true;
+    }
+
+    @Override
+    public boolean updatePassword(int id, String oldPass, String newPass) {
+        boolean result = false;
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        VipTblEntity po = session.get(VipTblEntity.class, id);
+        if (po!=null && po.getPassword().equals(oldPass)) {
+            po.setPassword(newPass);
+            session.update(po);
+            result = true;
+        }
+        tx.commit();
+        session.close();
+        return result;
     }
 }

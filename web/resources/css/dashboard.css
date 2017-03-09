@@ -23,19 +23,6 @@ a {
     background: #ffffff;
     position: relative;
 }
-.white-label {
-    float: left;
-    background: #33373B;
-    max-width: 210px;
-    padding: 10px;
-    min-height: 44px;
-    background: #279BE4;
-    width: 100%;
-    max-height: 44px;
-}
-.white-label img {
-    max-height: 43px;
-}
 .header-nav {
     min-height: 64px;
     -webkit-box-sizing: border-box;
@@ -49,30 +36,30 @@ a {
     color: #fff;
     padding: 12px 19px;
 }
-.nav ul {
-    height: 64px;
-    float: right;
-}
-.nav ul li {
-    float: left;
-    position: relative;
-    padding: 11px;
-}
-.nav > ul > li:first-child {
-    border-left: none;
-}
-.nav ul li a {
-    color: #fff;
-    padding: 1px;
-    float: left;
-}
-.nav ul li i {
-    color: #fff;
-}
-.nav ul li:hover {
-    background: #01A9F0;
-    color: #fff;
-}
+/*.nav ul {*/
+    /*height: 64px;*/
+    /*float: right;*/
+/*}*/
+/*.nav ul li {*/
+    /*float: left;*/
+    /*position: relative;*/
+    /*padding: 11px;*/
+/*}*/
+/*.nav > ul > li:first-child {*/
+    /*border-left: none;*/
+/*}*/
+/*.nav ul li a {*/
+    /*!*color: #fff;*!*/
+    /*padding: 1px;*/
+    /*float: left;*/
+/*}*/
+/*.nav ul li i {*/
+    /*color: #fff;*/
+/*}*/
+/*.nav ul li:hover {*/
+    /*background: #01A9F0;*/
+    /*color: #fff;*/
+/*}*/
 .user-profile {
     float: right;
 }
@@ -116,6 +103,9 @@ div.user-image {
     margin: 0 5px;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
+}
+div.nav-profile-image {
+    float: right;
 }
 .nav-profile {
     background: #0274BD;
@@ -232,7 +222,7 @@ div.user-image {
     box-sizing: border-box;
 }
 .content-header {
-    background: #fff;
+    background: #b3f0ff;
     float: left;
     width: 100%;
     margin-bottom: 15px;

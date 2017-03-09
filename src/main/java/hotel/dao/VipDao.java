@@ -12,4 +12,9 @@ public interface VipDao {
     public VipTblEntity getVipById(int id);
 
     public VipTblEntity getVipByUsername(String username);
+
+    public boolean updateVip(VipTblEntity entity);
+
+    public boolean updatePassword(int id, String oldPass, String newPass);
+
 }

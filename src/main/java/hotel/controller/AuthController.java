@@ -81,7 +81,7 @@ public class AuthController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String getRegister(Model model){
         VipVO vipVO = new VipVO();
-        model.addAttribute("vip", vipVO);
+        model.addAttribute("vipVO", vipVO);
         return "register";
     }
 
@@ -97,7 +97,7 @@ public class AuthController {
         }
         else {
             session.setAttribute("vipInfo", resultVO);
-            return "forward:/vip/info";
+            return "redirect:/vip/info";
         }
     }
 }

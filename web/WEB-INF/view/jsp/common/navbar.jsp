@@ -29,7 +29,7 @@
                         </li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="/auth/login">登录</a></li>
+                        <li><a href="/auth/login">登录/注册</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

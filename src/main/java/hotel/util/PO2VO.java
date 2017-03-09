@@ -36,7 +36,7 @@ public class PO2VO {
             return null;
         }
         VipVO vo = new VipVO();
-        vo.setId(df.format(vo.getId()));
+        vo.setId(df.format(po.getId()));
         vo.setName(po.getName());
         vo.setBalance(po.getBalance());
         vo.setLevel(po.getLevel());
