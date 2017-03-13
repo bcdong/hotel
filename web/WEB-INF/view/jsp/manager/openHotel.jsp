@@ -60,6 +60,7 @@
                 <sf:form action="/sbmanager/open-hotel" method="POST" commandName="hotelVO">
                     酒店名称: <sf:input path="name" />
                     <sf:errors path="name" cssClass="error"/><br/>
+                    酒店地址: <sf:input path="address" /><br/>
                     <input type="submit" value="提交">
                 </sf:form>
             </c:otherwise>

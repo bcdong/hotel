@@ -1,9 +1,10 @@
 package hotel.controller;
 
+import hotel.service.HotelService;
+import hotel.service.OrderService;
 import hotel.service.VipService;
-import hotel.vo.PasswordForm;
-import hotel.vo.VipBasicInfo;
-import hotel.vo.VipVO;
+import hotel.type.OrderResult;
+import hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +12,16 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mr.Zero on 2017/3/2.
@@ -23,10 +31,16 @@ import javax.validation.Valid;
 @RequestMapping(value = "/vip")
 public class VipController {
     private VipService vipService;
+    private HotelService hotelService;
+    private DateFormat df;
+    private OrderService orderService;
 
     @Autowired
-    public VipController(VipService vipService) {
+    public VipController(VipService vipService, HotelService hotelService, OrderService orderService) {
         this.vipService = vipService;
+        this.hotelService = hotelService;
+        this.orderService = orderService;
+        this.df = new SimpleDateFormat("yyyy-MM-dd");
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
@@ -80,8 +94,9 @@ public class VipController {
 
     @RequestMapping(value = "/account", method = RequestMethod.GET)
     public String accountInfo(HttpSession session) {
-        VipVO vipInfo = (VipVO) session.getAttribute("vipInfo");
-
+        VipVO oldInfo = (VipVO) session.getAttribute("vipInfo");
+        VipVO vipInfo = vipService.getVipById(oldInfo.getId());
+        session.setAttribute("vipInfo", vipInfo);
         return "vip/account";
     }
 
@@ -147,5 +162,87 @@ public class VipController {
         else {
             return "vip/account";
         }
+    }
+
+    @RequestMapping(value = "/book-hotel", method = RequestMethod.GET)
+    public String getBookHotel(@RequestParam("hotelId") String hotelId,
+                            @RequestParam("roomType") String roomType,
+                            Model model) {
+        HotelVO hotelVO = hotelService.getHotel(hotelId);
+        BookHotelForm bookForm = new BookHotelForm();
+        bookForm.setHotelId(hotelId);
+        bookForm.setHotelName(hotelVO.getName());
+        bookForm.setHotelAddress(hotelVO.getAddress());
+        bookForm.setRoomType(roomType);
+        for (PlanVO vo : hotelVO.getPlans()) {
+            if (vo.getRoomType().equals(roomType)) {
+                bookForm.setRoomPrice(vo.getRoomPrice());
+            }
+        }
+        bookForm.setToday(df.format(new Date()));
+        model.addAttribute("bookForm", bookForm);
+        return "vip/bookHotel";
+    }
+
+    @RequestMapping(value = "/book-hotel", method = RequestMethod.POST)
+    public String postBookHotel(BookHotelForm bookForm,
+                                Model model,
+                                HttpSession session) {
+        Date fromDate;
+        Date toDate;
+        try {
+            fromDate = df.parse(bookForm.getFromTime());
+            toDate = df.parse(bookForm.getToTime());
+            if (fromDate.after(toDate)) {
+                model.addAttribute("errorMessage", "退房日期不得早于入住日期");
+                model.addAttribute("bookForm", bookForm);
+                return "vip/bookHotel";
+            }
+        } catch (ParseException e) {
+            model.addAttribute("errorMessage", "日期格式错误");
+            model.addAttribute("bookForm", bookForm);
+            return "vip/bookHotel";
+        }
+        VipVO vipInfo = (VipVO) session.getAttribute("vipInfo");
+        OrderVO orderVO = vipService.bookHotel(bookForm.getHotelId(), bookForm.getRoomType(), fromDate, toDate, vipInfo.getId(), bookForm.getCustomer());
+        model.addAttribute("orderVO", orderVO);
+        return "vip/order";
+    }
+
+    @RequestMapping(value = "/confirm-order")
+    public String confirmOrder(OrderVO orderVO, Model model, HttpSession session) {
+        VipVO vipInfo = (VipVO) session.getAttribute("vipInfo");
+        orderVO.setVipId(vipInfo.getId());
+        OrderResult result = vipService.confirmOrder(orderVO);
+        switch(result) {
+            case LACK_MONEY:model.addAttribute("errorMessage", "余额不足，支付失败");break;
+            case LACK_ROOM:model.addAttribute("errorMessage", "您预定的房间已被订完，请选择其他类型房间");
+            case SUCCESS:
+            default:{
+                model.addAttribute("successMessage", "预订成功");
+                VipVO newInfo = vipService.getVipById(vipInfo.getId());
+                session.setAttribute("vipInfo", newInfo);
+            }
+        }
+        return "vip/orderResult";
+    }
+
+    @RequestMapping(value = "/record")
+    public String getMyOrder(Model model, HttpSession session) {
+        VipVO vipInfo = (VipVO) session.getAttribute("vipInfo");
+        Map<String,Object> map = orderService.getVipStatistic(vipInfo.getId());
+        model.addAttribute("totalCost", map.get("totalCost"));
+        model.addAttribute("orderCount", map.get("orderCount"));
+        String DEFAULT_ORDER_TYPE = "BOOK";
+        List<OrderVO> bookOrders = orderService.getOrderByVipAndState(vipInfo.getId(), DEFAULT_ORDER_TYPE);
+        model.addAttribute("bookOrders", bookOrders);
+        return "vip/record";
+    }
+
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    @ResponseBody
+    public List<OrderVO> getOrderByState(@RequestParam("state") String state, HttpSession session) {
+        VipVO vipInfo = (VipVO) session.getAttribute("vipInfo");
+        return orderService.getOrderByVipAndState(vipInfo.getId(), state);
     }
 }

@@ -14,6 +14,7 @@
         <div class="panel-heading">${hotel.state}</div>
         <div class="panel-body">
             <h2><a href="/hotel/${hotel.id}">${hotel.name}</a></h2>
+            <p>地址: ${hotel.address}</p>
         </div>
     </div>
 </c:forEach>

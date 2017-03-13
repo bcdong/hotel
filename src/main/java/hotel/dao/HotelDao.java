@@ -1,6 +1,7 @@
 package hotel.dao;
 
 import hotel.entity.HotelTblEntity;
+import hotel.entity.PlanTblEntity;
 import hotel.type.HotelState;
 import hotel.vo.HotelPlanForm;
 
@@ -20,6 +21,8 @@ public interface HotelDao {
     public HotelTblEntity addHotel(HotelTblEntity hotelTblEntity, int managerId);
 
     public boolean updateHotelPlan(HotelPlanForm planForm);
+
+    public void updatePlanByPO(PlanTblEntity planPO);
 
     public List<HotelTblEntity> getApplyHotels();
 

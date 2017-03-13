@@ -109,6 +109,15 @@ public class HotelDaoImpl implements HotelDao{
     }
 
     @Override
+    public void updatePlanByPO(PlanTblEntity planPO) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.merge(planPO);
+        tx.commit();
+        session.close();
+    }
+
+    @Override
     public List<HotelTblEntity> getApplyHotels() {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from HotelTblEntity where state = :apply ");

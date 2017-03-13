@@ -14,10 +14,8 @@
 
         <mapping class="hotel.entity.HotelTblEntity"/>
         <mapping class="hotel.entity.ManagerTblEntity"/>
-        <mapping class="hotel.entity.OrderCustomerTblEntity"/>
         <mapping class="hotel.entity.OrderTblEntity"/>
         <mapping class="hotel.entity.PlanTblEntity"/>
-        <mapping class="hotel.entity.RoomTblEntity"/>
         <mapping class="hotel.entity.VipTblEntity"/>
 
         <!-- DB schema will be updated if needed -->

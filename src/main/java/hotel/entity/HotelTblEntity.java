@@ -13,11 +13,11 @@ import java.util.Collection;
 public class HotelTblEntity {
     private int id;
     private String name;
+    private String address;
     private HotelState state;
     private ManagerTblEntity managerTblByManagerId;
     private Collection<OrderTblEntity> orderTblsById;
     private Collection<PlanTblEntity> planTblsById;
-    private Collection<RoomTblEntity> roomTblsById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +41,16 @@ public class HotelTblEntity {
     }
 
     @Basic
+    @Column(name = "address", length = 255)
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Basic
     @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false, length = 32)
     public HotelState getState() {
@@ -60,6 +70,7 @@ public class HotelTblEntity {
 
         if (id != entity.id) return false;
         if (name != null ? !name.equals(entity.name) : entity.name != null) return false;
+        if (address != null ? !address.equals(entity.address) : entity.address != null) return false;
         if (state != null ? !state.equals(entity.state) : entity.state != null) return false;
 
         return true;
@@ -69,6 +80,7 @@ public class HotelTblEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
     }
@@ -101,12 +113,4 @@ public class HotelTblEntity {
         this.planTblsById = planTblsById;
     }
 
-    @OneToMany(mappedBy = "hotelTblByHotelId")
-    public Collection<RoomTblEntity> getRoomTblsById() {
-        return roomTblsById;
-    }
-
-    public void setRoomTblsById(Collection<RoomTblEntity> roomTblsById) {
-        this.roomTblsById = roomTblsById;
-    }
 }

@@ -1,22 +1,15 @@
 package hotel.util;
 
-import hotel.entity.HotelTblEntity;
-import hotel.entity.ManagerTblEntity;
-import hotel.entity.PlanTblEntity;
-import hotel.entity.VipTblEntity;
+import hotel.entity.*;
 import hotel.type.RoomType;
 import hotel.type.VipState;
-import hotel.vo.HotelVO;
-import hotel.vo.ManagerVO;
-import hotel.vo.PlanVO;
-import hotel.vo.VipVO;
+import hotel.vo.*;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Mr.Zero on 2017/3/2.
@@ -25,10 +18,12 @@ import java.util.List;
 public class PO2VO {
 
     private DecimalFormat df;
+    private DateFormat dateFormat;
 
     public PO2VO() {
         String formatStr = "0000000";
         this.df = new DecimalFormat(formatStr);
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
     public VipVO vipPO2VO(VipTblEntity po) {
@@ -77,6 +72,7 @@ public class PO2VO {
         HotelVO vo = new HotelVO();
         vo.setId(String.valueOf(po.getId()));
         vo.setName(po.getName());
+        vo.setAddress(po.getAddress());
         String state = "";
         switch (po.getState()) {
             case APPLYING:state = "申请中";break;
@@ -124,6 +120,40 @@ public class PO2VO {
                 vo.setHotel(hotelPO2VO(hotelPO));
             }
         }
+        return vo;
+    }
+
+    public OrderVO orderPO2VO(OrderTblEntity po) {
+        OrderVO vo = new OrderVO();
+        vo.setId(df.format(po.getId()));
+        vo.setHotelId(df.format(po.getHotelTblByHotelId().getId()));
+        vo.setHotelName(po.getHotelTblByHotelId().getName());
+        vo.setFromTime(dateFormat.format(new Date(po.getFromTime().getTime())));
+        vo.setToTime(dateFormat.format(new Date(po.getToTime().getTime())));
+        String orderState;
+        switch (po.getState()) {
+            case BOOK:orderState = "已预订";break;
+            case IN:orderState = "已入住";break;
+            case LEAVE:
+            default:orderState = "已离店";break;
+        }
+        vo.setState(orderState);
+        vo.setCostBeforeDiscount(po.getCost());
+        vo.setDiscount(0.0);
+        vo.setRoomId(po.getRoomId());
+        switch(po.getRoomType()) {
+            case SINGLE:vo.setRoomType("单人间");break;
+            case T_DOUBLE:vo.setRoomType("双人间");break;
+            case TRIPLE:
+                default:vo.setRoomType("三人间");
+        }
+        vo.setCustomer(po.getCustomer());
+        switch (po.getPayMethod()) {
+            case CASH:vo.setPayMethod("现金");break;
+            case VIP_CARD:
+                default:vo.setPayMethod("会员卡");break;
+        }
+        vo.setVipId(df.format(po.getVipTblByVipId().getId()));
         return vo;
     }
 }

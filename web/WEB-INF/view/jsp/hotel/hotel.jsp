@@ -10,6 +10,7 @@
 <body>
 <c:import url="../common/navbar.jsp" />
 <h1 class="bg-info">${hotel.name} <span class="label label-warning">${hotel.state}</span></h1>
+<p>酒店地址：${hotel.address}</p>
 <c:forEach items="${hotel.plans}" var="plan">
     <div class="row" style="margin-bottom:50px">
         <c:choose>
@@ -27,7 +28,7 @@
             <h3>${plan.roomType}</h3>
             <p>房间价格: ${plan.roomPrice} 元</p>
             <p>剩余房数：${plan.roomCount} 间</p>
-            <p><a href="#" class="btn btn-primary btn-lg" type="button">预定</a></p>
+            <p><a href="/vip/book-hotel?hotelId=${hotel.id}&roomType=${plan.roomType}" class="btn btn-primary btn-lg" type="button">预定</a></p>
         </div>
     </div>
 </c:forEach>

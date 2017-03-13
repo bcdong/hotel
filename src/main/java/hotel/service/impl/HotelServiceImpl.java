@@ -65,6 +65,7 @@ public class HotelServiceImpl implements HotelService {
     public HotelVO addHotel(HotelVO hotelVO, int managerId) {
         HotelTblEntity po = new HotelTblEntity();
         po.setName(hotelVO.getName());
+        po.setAddress(hotelVO.getAddress());
         po.setState(HotelState.APPLYING);
         HotelTblEntity savedPO = hotelDao.addHotel(po, managerId);
         HotelVO vo = po2VO.hotelPO2VO(savedPO);

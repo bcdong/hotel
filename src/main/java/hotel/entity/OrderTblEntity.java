@@ -2,6 +2,7 @@ package hotel.entity;
 
 import hotel.type.OrderState;
 import hotel.type.PayMethod;
+import hotel.type.RoomType;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -19,8 +20,9 @@ public class OrderTblEntity {
     private OrderState state;
     private double cost;
     private String roomId;
+    private RoomType roomType;
+    private String customer;
     private PayMethod payMethod;
-    private Collection<OrderCustomerTblEntity> orderCustomerTblsById;
     private VipTblEntity vipTblByVipId;
     private HotelTblEntity hotelTblByHotelId;
 
@@ -88,6 +90,27 @@ public class OrderTblEntity {
 
     @Basic
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "room_type", length = 31)
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    @Basic
+    @Column(name = "customer", length = 255)
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    @Basic
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "pay_method", nullable = false, length = 31)
     public PayMethod getPayMethod() {
         return payMethod;
@@ -110,6 +133,8 @@ public class OrderTblEntity {
         if (toTime != null ? !toTime.equals(that.toTime) : that.toTime != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (roomId != null ? !roomId.equals(that.roomId) : that.roomId != null) return false;
+        if (roomType != null ? !roomType.equals(that.roomType) : that.roomType != null) return false;
+        if (customer != null ? !customer.equals(that.customer) : that.customer != null) return false;
         if (payMethod != null ? !payMethod.equals(that.payMethod) : that.payMethod != null) return false;
 
         return true;
@@ -126,17 +151,10 @@ public class OrderTblEntity {
         temp = Double.doubleToLongBits(cost);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (roomId != null ? roomId.hashCode() : 0);
+        result = 31 * result + (roomType != null ? roomType.hashCode() : 0);
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
         result = 31 * result + (payMethod != null ? payMethod.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "orderTblByOrderId", fetch = FetchType.EAGER)
-    public Collection<OrderCustomerTblEntity> getOrderCustomerTblsById() {
-        return orderCustomerTblsById;
-    }
-
-    public void setOrderCustomerTblsById(Collection<OrderCustomerTblEntity> orderCustomerTblsById) {
-        this.orderCustomerTblsById = orderCustomerTblsById;
     }
 
     @ManyToOne

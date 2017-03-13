@@ -17,9 +17,9 @@
         <sf:option value="vip" label="vip" />
         <sf:option value="manager" label="管理员" />
     </sf:select><br/>
-    用户名: <sf:input path="username" />
+    用户名:<sf:input path="username" />
     <sf:errors path="username" cssClass="error"/><br/>
-    密码  : <sf:password path="password" />
+    密码  :<sf:password path="password" />
     <sf:errors path="password" cssClass="error"/><br/>
     <input type="submit" value="登录">
 </sf:form>
