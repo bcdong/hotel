@@ -28,11 +28,13 @@ public class ManagerController {
 
     private HotelService hotelService;
     private OrderService orderService;
+    private ManagerService managerService;
 
     @Autowired
-    public ManagerController(ManagerService managerService, HotelService hotelService, OrderService orderService) {
+    public ManagerController(ManagerService managerService, HotelService hotelService, OrderService orderService, ManagerService managerService1) {
         this.hotelService = hotelService;
         this.orderService = orderService;
+        this.managerService = managerService1;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -50,6 +52,8 @@ public class ManagerController {
     @RequestMapping(value = "/statistic", method = RequestMethod.GET)
     public String statistic(Model model, HttpSession session) {
         ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
+        managerVO = managerService.getManagerById(managerVO.getId());
+        session.setAttribute("managerInfo", managerVO);
         HotelVO hotelVO = managerVO.getHotel();
         if (hotelVO!=null) {
             Map<String,Object> map = hotelService.getHotelStatistic(hotelVO.getId());
@@ -61,7 +65,10 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/open-hotel", method = RequestMethod.GET)
-    public String getOpenHotel(Model model) {
+    public String getOpenHotel(Model model, HttpSession session) {
+        ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
+        managerVO = managerService.getManagerById(managerVO.getId());
+        session.setAttribute("managerInfo", managerVO);
         HotelVO hotel = new HotelVO();
         model.addAttribute("hotelVO", hotel);
         return "manager/openHotel";
@@ -83,6 +90,8 @@ public class ManagerController {
     @RequestMapping(value = "/hotel-plan", method = RequestMethod.GET)
     public String getHotelPlan(Model model, HttpSession session){
         ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
+        managerVO = managerService.getManagerById(managerVO.getId());
+        session.setAttribute("managerInfo", managerVO);
         if (managerVO.getHotel() != null) {
             String  hotelId = managerVO.getHotel().getId();
             HotelVO hotelVOWithPlan = hotelService.getHotel(hotelId);
@@ -125,6 +134,8 @@ public class ManagerController {
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public String getHotelOrderPage(Model model, HttpSession session) {
         ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
+        managerVO = managerService.getManagerById(managerVO.getId());
+        session.setAttribute("managerInfo", managerVO);
         if (managerVO.getHotel() != null) {
             List<OrderVO> bookOrders = orderService.getOrderByHotelAndState(managerVO.getHotel().getId(), "BOOK");
             model.addAttribute("orderList", bookOrders);

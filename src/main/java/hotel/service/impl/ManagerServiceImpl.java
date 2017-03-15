@@ -53,4 +53,10 @@ public class ManagerServiceImpl implements ManagerService {
             return vo;
         }
     }
+
+    @Override
+    public ManagerVO getManagerById(int id) {
+        ManagerTblEntity po = managerDao.getManagerById(id);
+        return po2VO.managerPO2VO(po);
+    }
 }

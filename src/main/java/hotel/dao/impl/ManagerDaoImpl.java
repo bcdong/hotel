@@ -55,4 +55,13 @@ public class ManagerDaoImpl implements ManagerDao {
         session.close();
         return result;
     }
+
+    @Override
+    public ManagerTblEntity getManagerById(int id) {
+        Session session = sessionFactory.openSession();
+        ManagerTblEntity po = session.get(ManagerTblEntity.class, id);
+        Hibernate.initialize(po.getHotelTblsById());
+        session.close();
+        return po;
+    }
 }

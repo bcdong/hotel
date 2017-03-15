@@ -10,4 +10,6 @@ public interface ManagerDao {
     public ManagerTblEntity getManagerByUsername(String username);
 
     public Integer addManager(ManagerTblEntity manager);
+
+    public ManagerTblEntity getManagerById(int id);
 }

@@ -11,4 +11,6 @@ public interface ManagerService {
     public ManagerVO login(String username, String password);
 
     public ManagerVO addManager(ManagerForm form);
+
+    public ManagerVO getManagerById(int id);
 }

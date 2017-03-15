@@ -73,6 +73,8 @@ public class HotelServiceImpl implements HotelService {
         po.setName(hotelVO.getName());
         po.setAddress(hotelVO.getAddress());
         po.setState(HotelState.APPLYING);
+        po.setTodayIncome(0.0);
+        po.setTotalIncome(0.0);
         HotelTblEntity savedPO = hotelDao.addHotel(po, managerId);
         HotelVO vo = po2VO.hotelPO2VO(savedPO);
         return vo;

@@ -55,7 +55,7 @@
         <c:if test="${managerInfo.hotel != null}">
             总订单数：${totalOrders}<br/>
             今日收入：${todayIncome}<br/>
-            总收入  ：${totalIncome}<br/>
+            历史收入：${totalIncome}<br/>
         </c:if>
     </div>
 </section>
