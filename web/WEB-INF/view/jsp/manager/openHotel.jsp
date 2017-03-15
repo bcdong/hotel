@@ -14,6 +14,7 @@
     </div>
     <div id="sidebar-nav">
         <ul>
+            <li><a href="/sbmanager/orders">住房管理</a></li>
             <li><a href="/sbmanager/hotel-plan">酒店概况</a></li>
             <li><a href="/sbmanager/statistic">统计信息</a></li>
             <li class="active"><a href="/sbmanager/open-hotel">开店申请</a></li>
@@ -77,6 +78,5 @@
         </div>
     </div>
 </section>
-</div>
 </body>
 </html>

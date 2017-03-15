@@ -69,6 +69,5 @@
         </table>
     </div>
 </section>
-</div>
 </body>
 </html>

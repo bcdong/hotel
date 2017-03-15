@@ -2,17 +2,17 @@ package hotel.controller;
 
 import hotel.service.HotelService;
 import hotel.service.ManagerService;
+import hotel.service.OrderService;
 import hotel.type.ManagerType;
-import hotel.vo.HotelPlanForm;
-import hotel.vo.HotelVO;
-import hotel.vo.ManagerVO;
-import hotel.vo.PlanVO;
+import hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,13 +25,13 @@ import java.util.List;
 @RequestMapping(value = "/sbmanager")
 public class ManagerController {
 
-    private ManagerService managerService;
     private HotelService hotelService;
+    private OrderService orderService;
 
     @Autowired
-    public ManagerController(ManagerService managerService, HotelService hotelService) {
-        this.managerService = managerService;
+    public ManagerController(ManagerService managerService, HotelService hotelService, OrderService orderService) {
         this.hotelService = hotelService;
+        this.orderService = orderService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -42,7 +42,7 @@ public class ManagerController {
             return "redirect:/topmanager/check-apply";
         }
         else {      //normal manager
-            return "forward:/sbmanager/hotel-plan";
+            return "forward:/sbmanager/orders";
         }
     }
 
@@ -116,4 +116,32 @@ public class ManagerController {
         return getHotelPlan(model, session);
     }
 
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public String getHotelOrderPage(Model model, HttpSession session) {
+        ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
+        List<OrderVO> bookOrders = orderService.getOrderByHotelAndState(managerVO.getHotel().getId(), "BOOK");
+        model.addAttribute("orderList", bookOrders);
+        return "manager/orders";
+    }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.POST)
+    @ResponseBody
+    public List<OrderVO> getOrderByHotelAndState(@RequestParam("state") String state,
+                                                 HttpSession session) {
+        ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
+        return orderService.getOrderByHotelAndState(managerVO.getHotel().getId(), state);
+    }
+
+    @RequestMapping(value = "/postLiveIn", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean handleLiveIn(@RequestParam("orderId") String orderId,
+                               @RequestParam("roomId") String roomId) {
+        return orderService.updateOrderState(orderId, "IN", roomId);
+    }
+
+    @RequestMapping(value = "/postLeave", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean handleLeave(@RequestParam("orderId") String orderId) {
+        return orderService.updateOrderState(orderId, "LEAVE");
+    }
 }

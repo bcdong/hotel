@@ -17,4 +17,10 @@ public interface OrderDao {
     public List<OrderTblEntity> getOrderByVipAndState(int vipId, OrderState state);
 
     public Map<String,Object> getVipStatistic(int vipId);
+
+    public boolean updateOrder(int orderId, OrderState state, String roomId);
+
+    public List<OrderTblEntity> getOrderByHotel(int hotelId);
+
+    public List<OrderTblEntity> getOrderByHotelAndState(int hotelId, OrderState state);
 }

@@ -15,7 +15,7 @@ function getOrdersByState(state) {
             $('#orderType').html(type+'<span class="caret"></span>');
             $('tr').remove('.orderItem');
             var index;
-            for (index in orderVOList) {
+            for (index=0; index<orderVOList.length;index++) {
                 var order = orderVOList[index];
                 var row = '<tr class="orderItem">';
                 row += '<td>' + order.hotelName + '</td>';

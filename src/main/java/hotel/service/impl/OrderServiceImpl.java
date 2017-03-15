@@ -42,12 +42,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderVO> getOrderByVipAndState(String vipId, String state) {
         int iVipId = Integer.parseInt(vipId);
-        OrderState state1;
-        switch (state) {
-            case "BOOK":state1 = OrderState.BOOK;break;
-            case "IN":state1 = OrderState.IN;break;
-            case "LEAVE":default:state1 = OrderState.LEAVE;break;
-        }
+        OrderState state1 = OrderState.str2Enum(state);
         List<OrderTblEntity> orderPOs = orderDao.getOrderByVipAndState(iVipId, state1);
         List<OrderVO> voList = new ArrayList<>();
         for (OrderTblEntity po : orderPOs) {
@@ -60,5 +55,40 @@ public class OrderServiceImpl implements OrderService {
     public Map<String, Object> getVipStatistic(String vipId) {
         int id = Integer.parseInt(vipId);
         return orderDao.getVipStatistic(id);
+    }
+
+    @Override
+    public List<OrderVO> getOrderByHotel(String hotelId) {
+        int iHotelId = Integer.parseInt(hotelId);
+        List<OrderTblEntity> poList = orderDao.getOrderByHotel(iHotelId);
+        List<OrderVO> voList = new ArrayList<>();
+        for (OrderTblEntity po : poList) {
+            voList.add(po2VO.orderPO2VO(po));
+        }
+        return voList;
+    }
+
+    @Override
+    public List<OrderVO> getOrderByHotelAndState(String hotelId, String state) {
+        int iHotelId = Integer.parseInt(hotelId);
+        OrderState s = OrderState.str2Enum(state);
+        List<OrderTblEntity> poList = orderDao.getOrderByHotelAndState(iHotelId, s);
+        List<OrderVO> voList = new ArrayList<>();
+        for (OrderTblEntity po : poList) {
+            voList.add(po2VO.orderPO2VO(po));
+        }
+        return voList;
+    }
+
+    @Override
+    public boolean updateOrderState(String orderId, String state) {
+        return updateOrderState(orderId, state, "");
+    }
+
+    @Override
+    public boolean updateOrderState(String orderId, String state, String roomId) {
+        int iOrderId = Integer.parseInt(orderId);
+        OrderState eState = OrderState.str2Enum(state);
+        return orderDao.updateOrder(iOrderId, eState, roomId);
     }
 }

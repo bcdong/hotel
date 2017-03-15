@@ -1,6 +1,5 @@
 package hotel.controller;
 
-import hotel.entity.HotelTblEntity;
 import hotel.service.HotelService;
 import hotel.vo.HotelVO;
 import org.springframework.beans.factory.annotation.Autowired;

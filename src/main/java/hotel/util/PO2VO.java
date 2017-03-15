@@ -154,6 +154,7 @@ public class PO2VO {
                 default:vo.setPayMethod("会员卡");break;
         }
         vo.setVipId(df.format(po.getVipTblByVipId().getId()));
+        vo.setVipName(po.getVipTblByVipId().getName());
         return vo;
     }
 }

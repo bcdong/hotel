@@ -56,6 +56,5 @@
         </sf:form>
     </div>
 </section>
-</div>
 </body>
 </html>

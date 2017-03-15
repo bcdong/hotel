@@ -17,6 +17,7 @@ public class OrderVO {
     private String customer;
     private String payMethod;
     private String vipId;
+    private String vipName;
 
     public String getId() {
         return id;
@@ -120,5 +121,13 @@ public class OrderVO {
 
     public void setHotelName(String hotelName) {
         this.hotelName = hotelName;
+    }
+
+    public String getVipName() {
+        return vipName;
+    }
+
+    public void setVipName(String vipName) {
+        this.vipName = vipName;
     }
 }

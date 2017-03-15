@@ -1,9 +1,11 @@
 package hotel.dao.impl;
 
 import hotel.dao.OrderDao;
+import hotel.entity.HotelTblEntity;
 import hotel.entity.OrderTblEntity;
 import hotel.entity.VipTblEntity;
 import hotel.type.OrderState;
+import hotel.type.RoomType;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,9 +48,6 @@ public class OrderDaoImpl implements OrderDao {
         Query query = session.createQuery("from OrderTblEntity where vipTblByVipId = :vipEntity ");
         query.setParameter("vipEntity", vip);
         List<OrderTblEntity> orders = query.list();
-        for (OrderTblEntity o : orders) {
-            Hibernate.initialize(o.getHotelTblByHotelId());
-        }
         tx.commit();
         session.close();
         return orders;
@@ -63,9 +62,6 @@ public class OrderDaoImpl implements OrderDao {
         query.setParameter("vipEntity", vip);
         query.setParameter("s", state);
         List<OrderTblEntity> orders = query.list();
-        for (OrderTblEntity o : orders) {
-            Hibernate.initialize(o.getHotelTblByHotelId());
-        }
         tx.commit();
         session.close();
         return orders;
@@ -91,5 +87,58 @@ public class OrderDaoImpl implements OrderDao {
         tx.commit();
         session.close();
         return map;
+    }
+
+    @Override
+    public boolean updateOrder(int orderId, OrderState state, String roomId) {
+        boolean result = false;
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        OrderTblEntity po = session.get(OrderTblEntity.class, orderId);
+        if (po != null) {
+            if (state == OrderState.IN) {
+                po.setRoomId(roomId);
+            }
+            po.setState(state);
+            result = true;
+        }
+        if (state == OrderState.LEAVE) {
+            HotelTblEntity hotel = po.getHotelTblByHotelId();
+            RoomType roomType = po.getRoomType();
+            Query query = session.createQuery("update PlanTblEntity set roomCount = roomCount+1 where hotelTblByHotelId = :hotelEntity and roomType = :rtype ");
+            query.setParameter("hotelEntity", hotel);
+            query.setParameter("rtype", roomType);
+            query.executeUpdate();
+        }
+        tx.commit();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<OrderTblEntity> getOrderByHotel(int hotelId) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        HotelTblEntity hotel = session.load(HotelTblEntity.class, hotelId);
+        Query query = session.createQuery("from OrderTblEntity where hotelTblByHotelId = :hotelEntity ");
+        query.setParameter("hotelEntity", hotel);
+        List<OrderTblEntity> orders = query.list();
+        tx.commit();
+        session.close();
+        return orders;
+    }
+
+    @Override
+    public List<OrderTblEntity> getOrderByHotelAndState(int hotelId, OrderState state) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        HotelTblEntity hotel = session.load(HotelTblEntity.class, hotelId);
+        Query query = session.createQuery("from OrderTblEntity where hotelTblByHotelId = :hotelEntity and state = :s ");
+        query.setParameter("hotelEntity", hotel);
+        query.setParameter("s", state);
+        List<OrderTblEntity> orders = query.list();
+        tx.commit();
+        session.close();
+        return orders;
     }
 }
