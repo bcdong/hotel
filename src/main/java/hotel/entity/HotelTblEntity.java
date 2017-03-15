@@ -15,6 +15,8 @@ public class HotelTblEntity {
     private String name;
     private String address;
     private HotelState state;
+    private Double todayIncome;
+    private Double totalIncome;
     private ManagerTblEntity managerTblByManagerId;
     private Collection<OrderTblEntity> orderTblsById;
     private Collection<PlanTblEntity> planTblsById;
@@ -61,6 +63,26 @@ public class HotelTblEntity {
         this.state = state;
     }
 
+    @Basic
+    @Column(name = "today_income", nullable = false)
+    public Double getTodayIncome() {
+        return todayIncome;
+    }
+
+    public void setTodayIncome(Double todayIncome) {
+        this.todayIncome = todayIncome;
+    }
+
+    @Basic
+    @Column(name = "total_income", nullable = false)
+    public Double getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(Double totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,6 +94,8 @@ public class HotelTblEntity {
         if (name != null ? !name.equals(entity.name) : entity.name != null) return false;
         if (address != null ? !address.equals(entity.address) : entity.address != null) return false;
         if (state != null ? !state.equals(entity.state) : entity.state != null) return false;
+        if (todayIncome != null ? !todayIncome.equals(entity.todayIncome) : entity.todayIncome != null) return false;
+        if (totalIncome != null ? !totalIncome.equals(entity.totalIncome) : entity.totalIncome != null) return false;
 
         return true;
     }
@@ -82,6 +106,8 @@ public class HotelTblEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (todayIncome != null ? todayIncome.hashCode() : 0);
+        result = 31 * result + (totalIncome != null ? totalIncome.hashCode() : 0);
         return result;
     }
 

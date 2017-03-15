@@ -2,9 +2,7 @@ package hotel.controller;
 
 import hotel.service.ManagerService;
 import hotel.service.VipService;
-import hotel.vo.LoginForm;
-import hotel.vo.ManagerVO;
-import hotel.vo.VipVO;
+import hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,24 +78,46 @@ public class AuthController {
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String getRegister(Model model){
-        VipVO vipVO = new VipVO();
-        model.addAttribute("vipVO", vipVO);
+        RegisterForm form = new RegisterForm();
+        model.addAttribute("regForm", form);
         return "register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String postRegister(@Valid VipVO vip, Errors errors, Model model, HttpSession session) {
+    public String postRegister(@Valid RegisterForm regForm, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             return "register";
         }
-        VipVO resultVO = vipService.register(vip);
-        if (resultVO == null){
-            model.addAttribute("errorMessage", "该用户名已存在");
+        if (regForm.getUserType().equals("manager")) {
+            ManagerForm managerForm = new ManagerForm();
+            managerForm.setName(regForm.getName());
+            managerForm.setUsername(regForm.getUsername());
+            managerForm.setPassword(regForm.getPassword());
+            ManagerVO vo = managerService.addManager(managerForm);
+            if (vo == null) {
+                model.addAttribute("errorMessage", "该用户名已存在");
+                return "register";
+            } else {
+                session.setAttribute("managerInfo", vo);
+                return "redirect:/sbmanager/open-hotel";
+            }
+        } else if (regForm.getUserType().equals("vip")) {
+            VipVO vipVO = new VipVO();
+            vipVO.setUsername(regForm.getUsername());
+            vipVO.setPassword(regForm.getPassword());
+            vipVO.setName(regForm.getName());
+            VipVO resultVO = vipService.register(vipVO);
+            if (resultVO == null){
+                model.addAttribute("errorMessage", "该用户名已存在");
+                return "register";
+            }
+            else {
+                session.setAttribute("vipInfo", resultVO);
+                return "redirect:/vip/info";
+            }
+        } else {
             return "register";
         }
-        else {
-            session.setAttribute("vipInfo", resultVO);
-            return "redirect:/vip/info";
-        }
+
     }
 }

@@ -60,6 +60,7 @@
                             <th>支付金额</th>
                             <th>支付方式</th>
                             <th>订单状态</th>
+                            <th>操作</th>
                         </tr>
                         <%--这里添加通过js添加订单--%>
                         <c:forEach items="${bookOrders}" var="order">
@@ -72,6 +73,9 @@
                                 <td>${order.costBeforeDiscount}</td>
                                 <td>${order.payMethod}</td>
                                 <td>${order.state}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" onclick="cancel(${order.id})">退订</button>
+                                </td>
                             </tr>
                         </c:forEach>
                     </table>

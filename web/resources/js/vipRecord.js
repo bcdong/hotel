@@ -26,9 +26,27 @@ function getOrdersByState(state) {
                 row += '<td>' + order.costBeforeDiscount + '</td>';
                 row += '<td>' + order.payMethod + '</td>';
                 row += '<td>' + order.state + '</td>';
+                if (state == 'BOOK') {
+                    row += '<td><button type="button" class="btn btn-primary" onclick="cancel('+order.id+')">退订</button></td>>';
+                } else {
+                    row += '<td>无</td>';
+                }
                 row += '</tr>';
                 $('.table>tbody').append(row);
             }
+        }
+    });
+}
+
+function cancel(orderId) {
+    $.ajax({
+        type:'post',
+        url:'/vip/cancel-order',
+        data:{
+            orderId:orderId
+        },
+        success:function (result) {
+            getOrdersByState('BOOK');
         }
     });
 }

@@ -40,8 +40,8 @@ public class ManagerDaoImpl implements ManagerDao {
         return null;
     }
 
-    public boolean addManager(ManagerTblEntity manager) {
-        boolean result = false;
+    public Integer addManager(ManagerTblEntity manager) {
+        Integer result = -1;
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery("from ManagerTblEntity where username = :uname ");
@@ -49,7 +49,7 @@ public class ManagerDaoImpl implements ManagerDao {
         List list = query.list();
         if (list.size() == 0) {
             Integer id = (Integer) session.save(manager);
-            result = true;
+            result = id;
         }
         tx.commit();
         session.close();

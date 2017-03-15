@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mr.Zero on 2017/3/4.
@@ -47,10 +48,15 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/statistic", method = RequestMethod.GET)
-    public String statistic(HttpSession session) {
+    public String statistic(Model model, HttpSession session) {
         ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
-        //todo
-
+        HotelVO hotelVO = managerVO.getHotel();
+        if (hotelVO!=null) {
+            Map<String,Object> map = hotelService.getHotelStatistic(hotelVO.getId());
+            model.addAttribute("totalOrders", map.get("totalOrders"));
+            model.addAttribute("todayIncome", map.get("todayIncome"));
+            model.addAttribute("totalIncome", map.get("totalIncome"));
+        }
         return "manager/statistic";
     }
 
@@ -119,9 +125,13 @@ public class ManagerController {
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public String getHotelOrderPage(Model model, HttpSession session) {
         ManagerVO managerVO = (ManagerVO) session.getAttribute("managerInfo");
-        List<OrderVO> bookOrders = orderService.getOrderByHotelAndState(managerVO.getHotel().getId(), "BOOK");
-        model.addAttribute("orderList", bookOrders);
-        return "manager/orders";
+        if (managerVO.getHotel() != null) {
+            List<OrderVO> bookOrders = orderService.getOrderByHotelAndState(managerVO.getHotel().getId(), "BOOK");
+            model.addAttribute("orderList", bookOrders);
+            return "manager/orders";
+        } else {
+            return "forward:/sbmanager/open-hotel";
+        }
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST)

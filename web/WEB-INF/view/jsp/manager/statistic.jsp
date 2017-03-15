@@ -1,5 +1,4 @@
 <%--@elvariable id="managerInfo" type="hotel.vo.ManagerVO"--%>
-<%--@elvariable id="managerForm" type="hotel.vo.ManagerForm"--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -14,11 +13,10 @@
     </div>
     <div id="sidebar-nav">
         <ul>
-            <li><a href="/topmanager/check-apply">审查开店请求</a></li>
-            <li><a href="/topmanager/check-status">查看入住情况</a></li>
-            <li><a href="/topmanager/check-vip">查看会员数据</a></li>
-            <li><a href="/topmanager/check-finance">查看财务统计</a></li>
-            <li class="active"><a href="/topmanager/add-manager">添加管理员</a></li>
+            <li><a href="/sbmanager/orders">住房管理</a></li>
+            <li><a href="/sbmanager/hotel-plan">酒店概况</a></li>
+            <li class="active"><a href="/sbmanager/statistic">统计信息</a></li>
+            <li><a href="/sbmanager/open-hotel">开店申请</a></li>
         </ul>
     </div>
 </section>
@@ -42,18 +40,23 @@
     </div>
     <div class="content">
         <div class="content-header">
-            <h1>添加管理员</h1>
-            <p>总经理: ${managerInfo.name}
+            <h1>统计数据</h1>
+            <p>经理: ${managerInfo.name}             酒店名称:
+                <c:choose>
+                    <c:when test="${managerInfo.hotel == null}">
+                        暂无酒店
+                    </c:when>
+                    <c:otherwise>
+                        ${managerInfo.hotel.name}    酒店状态: ${managerInfo.hotel.state}
+                    </c:otherwise>
+                </c:choose>
             </p>
         </div>
-        <div class="error">${errorMessage}</div>
-        <div class="success-msg">${successMessage}</div>
-        <sf:form action="/topmanager/add-manager" method="POST" commandName="managerForm">
-            姓名: <sf:input path="name" /> <sf:errors path="name" cssClass="error" /><br/>
-            用户名: <sf:input path="username" /><sf:errors path="username" cssClass="error" /><br/>
-            密码: <sf:password path="password" /><sf:errors path="password" cssClass="error" /><br/>
-            <input type="submit" value="提交">
-        </sf:form>
+        <c:if test="${managerInfo.hotel != null}">
+            总订单数：${totalOrders}<br/>
+            今日收入：${todayIncome}<br/>
+            总收入  ：${totalIncome}<br/>
+        </c:if>
     </div>
 </section>
 </body>

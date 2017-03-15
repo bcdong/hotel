@@ -85,6 +85,25 @@ public class PO2VO {
         return vo;
     }
 
+    public HotelIncomeVO hotelIncomePO2VO(HotelTblEntity po) {
+        if (po == null) {
+            return null;
+        }
+        HotelIncomeVO vo = new HotelIncomeVO();
+        vo.setId(String.valueOf(po.getId()));
+        vo.setName(po.getName());
+        String state = "";
+        switch (po.getState()) {
+            case APPLYING:state = "申请中";break;
+            case SUSPEND:state = "暂停营业";break;
+            case CLOSE:state = "已关闭";break;
+            case OPEN:state = "营业中";break;
+        }
+        vo.setState(state);
+        vo.setTodayIncome(po.getTodayIncome());
+        return vo;
+    }
+
     public HotelVO hotelPO2VOWithPlan(HotelTblEntity po) {
         HotelVO vo = hotelPO2VO(po);
         Collection<PlanTblEntity> planPOs = po.getPlanTblsById();

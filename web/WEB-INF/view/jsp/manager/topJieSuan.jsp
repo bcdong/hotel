@@ -1,6 +1,6 @@
 <%--@elvariable id="managerInfo" type="hotel.vo.ManagerVO"--%>
-<%--@elvariable id="hotelVO" type="hotel.vo.HotelVO"--%>
-<%--@elvariable id="hotelVOs" type="java.util.List<hotel.vo.HotelVO>"--%>
+<%--@elvariable id="incomeVO" type="hotel.vo.HotelIncomeVO"--%>
+<%--@elvariable id="incomeVOs" type="java.util.List<hotel.vo.HotelIncomeVO>"--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -8,6 +8,7 @@
     <title>酒店管理</title>
     <link rel="stylesheet" href="/resources/css/dashboard.css">
     <c:import url="../common/style.jsp" />
+    <script src="/resources/js/managerJieSuan.js"></script>
 </head>
 <body>
 <section id="sidebar">
@@ -15,8 +16,8 @@
     </div>
     <div id="sidebar-nav">
         <ul>
-            <li class="active"><a href="/topmanager/check-apply">审查开店请求</a></li>
-            <li><a href="/topmanager/jiesuan">结算各店收入</a></li>
+            <li><a href="/topmanager/check-apply">审查开店请求</a></li>
+            <li class="active"><a href="/topmanager/jiesuan">结算各店收入</a></li>
             <li><a href="/topmanager/check-status">查看入住情况</a></li>
             <li><a href="/topmanager/check-vip">查看会员数据</a></li>
             <li><a href="/topmanager/check-finance">查看财务统计</a></li>
@@ -43,26 +44,24 @@
     </div>
     <div class="content">
         <div class="content-header">
-            <h1>审查开店请求</h1>
+            <h1>结算各店收入</h1>
             <p>总经理: ${managerInfo.name}
             </p>
         </div>
         <table class="table">
-            <th>
-                <td>酒店名称</td>
-                <td>申请人</td>
-                <td>操作</td>
-            </th>
-            <c:forEach items="${hotelVOs}" var="hotelVO">
-                <tr>
-                    <td>${hotelVO.name}</td>
-                    <td>${hotelVO.managerName}</td>
-                    <td><a class="btn btn-success" type="button" href="/topmanager/handle-request?action=prove&id=${hotelVO.id}">
-                        批准
-                    </a>
-                        <a class="btn btn-danger" type="button" href="/topmanager/handle-request?action=reject&id=${hotelVO.id}">
-                            拒绝
-                        </a>
+            <tr>
+                <th>酒店名称</th>
+                <th>酒店状态</th>
+                <th>今日收入</th>
+                <th>操作</th>
+            </tr>
+            <c:forEach items="${incomeVOs}" var="incomeVO">
+                <tr class="hotelItem">
+                    <td>${incomeVO.name}</td>
+                    <td>${incomeVO.state}</td>
+                    <td>${incomeVO.todayIncome}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="jiesuan(${incomeVO.id})">结算</button>
                     </td>
                 </tr>
             </c:forEach>

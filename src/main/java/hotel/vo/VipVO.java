@@ -19,8 +19,6 @@ public class VipVO implements Serializable {
     private int experience;
     private int score;
     private String state;
-
-    @Digits(integer = 31,fraction = 0, message = "银行卡号必须为31位以内的数字")
     private String bankId;
 
     @NotNull(message = "用户名不能为空")

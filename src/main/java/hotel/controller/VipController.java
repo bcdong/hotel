@@ -47,6 +47,8 @@ public class VipController {
     public String getVipInfo(Model model, HttpSession session){
         //vip info is already in HttpSession
         VipVO vipVO = (VipVO) session.getAttribute("vipInfo");
+        vipVO = vipService.getVipById(vipVO.getId());
+        session.setAttribute("vipInfo", vipVO);
         VipBasicInfo basicInfo = new VipBasicInfo();
         basicInfo.setId(vipVO.getId());
         basicInfo.setName(vipVO.getName());
@@ -244,5 +246,11 @@ public class VipController {
     public List<OrderVO> getOrderByState(@RequestParam("state") String state, HttpSession session) {
         VipVO vipInfo = (VipVO) session.getAttribute("vipInfo");
         return orderService.getOrderByVipAndState(vipInfo.getId(), state);
+    }
+
+    @RequestMapping(value = "/cancel-order", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean cancelOrder(@RequestParam("orderId") String orderId) {
+        return orderService.cancelOrder(orderId);
     }
 }

@@ -3,6 +3,7 @@ package hotel.entity;
 import hotel.type.VipState;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -21,6 +22,7 @@ public class VipTblEntity {
     private VipState state;
     private String username;
     private String password;
+    private Timestamp chargeDate;
     private Collection<OrderTblEntity> orderTblsById;
 
     @Id
@@ -116,13 +118,23 @@ public class VipTblEntity {
     }
 
     @Basic
-    @Column(name = "bank_id", nullable = false, length = 31)
+    @Column(name = "bank_id", nullable = true, length = 31)
     public String getBankId() {
         return bankId;
     }
 
     public void setBankId(String bankId) {
         this.bankId = bankId;
+    }
+
+    @Basic
+    @Column(name = "charge_date", nullable = true)
+    public Timestamp getChargeDate() {
+        return chargeDate;
+    }
+
+    public void setChargeDate(Timestamp chargeDate) {
+        this.chargeDate = chargeDate;
     }
 
     @Override
@@ -140,6 +152,7 @@ public class VipTblEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (bankId != null ? !bankId.equals(that.bankId) : that.bankId != null) return false;
+        if (chargeDate != null ? !chargeDate.equals(that.chargeDate) : that.chargeDate != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
 
@@ -159,6 +172,7 @@ public class VipTblEntity {
         result = 31 * result + score;
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (bankId != null ? bankId.hashCode() : 0);
+        result = 31 * result + (chargeDate != null ? chargeDate.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;

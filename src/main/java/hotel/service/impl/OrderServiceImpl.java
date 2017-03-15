@@ -2,6 +2,7 @@ package hotel.service.impl;
 
 import hotel.dao.OrderDao;
 import hotel.entity.OrderTblEntity;
+import hotel.entity.VipTblEntity;
 import hotel.service.OrderService;
 import hotel.type.OrderState;
 import hotel.util.PO2VO;
@@ -90,5 +91,11 @@ public class OrderServiceImpl implements OrderService {
         int iOrderId = Integer.parseInt(orderId);
         OrderState eState = OrderState.str2Enum(state);
         return orderDao.updateOrder(iOrderId, eState, roomId);
+    }
+
+    @Override
+    public boolean cancelOrder(String orderId) {
+        Integer iOrderId = Integer.parseInt(orderId);
+        return orderDao.deleteOrder(iOrderId);
     }
 }

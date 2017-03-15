@@ -3,10 +3,9 @@ package hotel.vo;
 import javax.validation.constraints.Size;
 
 /**
- * Created by Mr.Zero on 2017/3/2.
+ * Created by Mr.Zero on 2017/3/15.
  */
-public class LoginForm {
-
+public class RegisterForm {
     //vip或者(manager)管理员
     private String userType;
 
@@ -15,6 +14,8 @@ public class LoginForm {
 
     @Size(min = 1, message = "密码不能为空")
     private String password;
+
+    private String name;
 
     public String getUsername() {
         return username;
@@ -38,5 +39,13 @@ public class LoginForm {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

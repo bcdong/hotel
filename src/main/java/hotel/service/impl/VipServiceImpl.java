@@ -33,16 +33,14 @@ public class VipServiceImpl implements VipService {
     private HotelService hotelService;
     private HotelDao hotelDao;
     private DateFormat df;
-    private VipLevelStrategy levelStrategy;
     private OrderDao orderDao;
 
     @Autowired
-    public VipServiceImpl(VipDao vipDao, PO2VO po2VO, HotelService hotelService, HotelDao hotelDao, VipLevelStrategy levelStrategy, OrderDao orderDao) {
+    public VipServiceImpl(VipDao vipDao, PO2VO po2VO, HotelService hotelService, HotelDao hotelDao, OrderDao orderDao) {
         this.vipDao = vipDao;
         this.po2VO = po2VO;
         this.hotelService = hotelService;
         this.hotelDao = hotelDao;
-        this.levelStrategy = levelStrategy;
         this.orderDao = orderDao;
         this.df = new SimpleDateFormat("yyyy-MM-dd");
     }
@@ -105,13 +103,14 @@ public class VipServiceImpl implements VipService {
     public VipVO charge(String id, double money) {
         int vipId = Integer.parseInt(id);
         VipTblEntity po = vipDao.getVipById(vipId);
-        if (po!=null) {
+        if (po!=null && po.getBankId()!=null && !po.getBankId().isEmpty()) {
             //此处调用银行api来扣钱
             if (money >= 1000 && po.getState() == VipState.PRE_ACTIVE) {
                 po.setState(VipState.ACTIVE);
             }
             double balance = po.getBalance()+money;
             po.setBalance(balance);
+            po.setChargeDate(new Timestamp(new Date().getTime()));
             vipDao.updateVip(po);
             return po2VO.vipPO2VO(po);
         }
@@ -216,9 +215,9 @@ public class VipServiceImpl implements VipService {
             //如果支付失败，则return失败
         }
 
-        vipPO.setScore((int) (vipPO.getScore()+cost));
-        vipPO.setExperience((int) (vipPO.getExperience()+cost));
-        vipPO.setLevel(levelStrategy.experience2Level(vipPO.getExperience()));
+//        vipPO.setScore((int) (vipPO.getScore()+cost));
+//        vipPO.setExperience((int) (vipPO.getExperience()+cost));
+//        vipPO.setLevel(levelStrategy.experience2Level(vipPO.getExperience()));
         vipDao.updateVip(vipPO);
         hotelDao.updatePlanByPO(orderPlanPO);
         //存储订单

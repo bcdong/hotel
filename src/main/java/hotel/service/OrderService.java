@@ -23,4 +23,6 @@ public interface OrderService {
 
     public boolean updateOrderState(String orderId, String state, String roomId);
 
+    public boolean cancelOrder(String orderId);
+
 }

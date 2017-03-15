@@ -23,6 +23,6 @@
     <sf:errors path="password" cssClass="error"/><br/>
     <input type="submit" value="登录">
 </sf:form>
-<a href="/auth/register">点我注册VIP</a>
+<a href="/auth/register">点我注册账号</a>
 </body>
 </html>

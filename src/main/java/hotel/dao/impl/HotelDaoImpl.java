@@ -147,6 +147,30 @@ public class HotelDaoImpl implements HotelDao{
         session.close();
     }
 
+    @Override
+    public boolean jieSuanHotel(int hotelId) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        HotelTblEntity po = session.get(HotelTblEntity.class, hotelId);
+        if (po!=null){
+            po.setTotalIncome(po.getTotalIncome()+po.getTodayIncome());
+            po.setTodayIncome(0.0);
+            session.update(po);
+        }
+        tx.commit();
+        session.close();
+        return true;
+    }
+
+    @Override
+    public List<HotelTblEntity> getHotelWithITodayncome() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from HotelTblEntity where todayIncome > 0 ");
+        List<HotelTblEntity> hotels = query.list();
+        session.close();
+        return hotels;
+    }
+
     private PlanTblEntity initPlan(RoomType type, HotelTblEntity belongedHotel) {
         PlanTblEntity roomPlan = new PlanTblEntity();
         roomPlan.setRoomCount(0);

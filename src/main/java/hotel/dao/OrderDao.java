@@ -12,6 +12,8 @@ import java.util.Map;
 public interface OrderDao {
     public void addOrder(OrderTblEntity orderPO);
 
+    public OrderTblEntity getOrderById(int orderId);
+
     public List<OrderTblEntity> getOrderByVip(int vipId);
 
     public List<OrderTblEntity> getOrderByVipAndState(int vipId, OrderState state);
@@ -23,4 +25,10 @@ public interface OrderDao {
     public List<OrderTblEntity> getOrderByHotel(int hotelId);
 
     public List<OrderTblEntity> getOrderByHotelAndState(int hotelId, OrderState state);
+
+    public boolean deleteOrder(int orderId);
+
+    public int getOrderCount(int hotelId);
+
+    public List<Object[]> getHotelLiveCount();
 }

@@ -27,4 +27,8 @@ public interface HotelDao {
     public List<HotelTblEntity> getApplyHotels();
 
     public void handleApplyHotels(HotelState state, int hotelId);
+
+    public boolean jieSuanHotel(int hotelId);
+
+    public List<HotelTblEntity> getHotelWithITodayncome();
 }

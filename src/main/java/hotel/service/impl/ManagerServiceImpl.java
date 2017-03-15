@@ -36,12 +36,21 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public boolean addManager(ManagerForm form) {
+    public ManagerVO addManager(ManagerForm form) {
         ManagerTblEntity entity = new ManagerTblEntity();
         entity.setName(form.getName());
         entity.setUsername(form.getUsername());
         entity.setPassword(form.getPassword());
         entity.setType(ManagerType.MANAGER);
-        return managerDao.addManager(entity);
+        Integer id = managerDao.addManager(entity);
+        if (id < 0) {
+            return null;
+        } else {
+            ManagerVO vo = new ManagerVO();
+            vo.setId(id);
+            vo.setName(form.getName());
+            vo.setType(ManagerType.MANAGER);
+            return vo;
+        }
     }
 }
