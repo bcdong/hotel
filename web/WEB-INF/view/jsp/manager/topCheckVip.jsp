@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/resources/css/dashboard.css">
     <c:import url="../common/style.jsp" />
     <script src="/resources/js/highcharts.js"></script>
-    <script src="/resources/js/exporting.js"></script>
-    <script src="/resources/js/checkHotelLive.js"></script>
+    <script src="/resources/js/checkVip.js"></script>
 </head>
 <body>
 <section id="sidebar">
@@ -18,8 +17,8 @@
         <ul>
             <li><a href="/topmanager/check-apply">审查开店请求</a></li>
             <li><a href="/topmanager/jiesuan">结算各店收入</a></li>
-            <li class="active"><a href="/topmanager/check-status">查看入住情况</a></li>
-            <li><a href="/topmanager/check-vip">查看会员数据</a></li>
+            <li><a href="/topmanager/check-status">查看入住情况</a></li>
+            <li class="active"><a href="/topmanager/check-vip">查看会员数据</a></li>
             <li><a href="/topmanager/check-finance">查看财务统计</a></li>
         </ul>
     </div>
@@ -44,13 +43,13 @@
     </div>
     <div class="content">
         <div class="content-header">
-            <h1>查看入住情况</h1>
+            <h1>查看会员数据</h1>
             <p>总经理: ${managerInfo.name}
             </p>
         </div>
-        <div id="container" style="min-width: 310px; max-width: 800px; margin: 0 auto">
-
+        <div id="orderCountContainer">
         </div>
+        <div id="vipCostContainer"></div>
     </div>
 </section>
 </body>

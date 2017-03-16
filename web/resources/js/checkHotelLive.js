@@ -40,7 +40,7 @@ function draw(liveCount) {
             }
         },
         tooltip: {
-            valueSuffix: ' millions'
+            valueSuffix: ' 人'
         },
         plotOptions: {
             bar: {

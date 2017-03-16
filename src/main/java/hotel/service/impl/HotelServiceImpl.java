@@ -34,13 +34,8 @@ public class HotelServiceImpl implements HotelService {
         this.orderDao = orderDao;
     }
 
-    public List<HotelVO> getAllHotels() {
-        List<HotelTblEntity> poList =  hotelDao.getAllHotels();
-        List<HotelVO> voList = new ArrayList<HotelVO>();
-        for (HotelTblEntity po : poList) {
-            voList.add(po2VO.hotelPO2VO(po));
-        }
-        return voList;
+    public List<Object[]> getAllHotelIncome() {
+        return hotelDao.getAllHotelIncome();
     }
 
     @Override

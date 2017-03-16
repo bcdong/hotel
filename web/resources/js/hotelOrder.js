@@ -37,7 +37,7 @@ function getOrdersByState(state) {
                 if (state == 'BOOK') {
                     row += '<td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" data-orderid="' + order.id+'" data-vipname="' + order.vipName+'">安排房间</button></td>';
                 } else if (state == 'IN') {
-                    row+='<td><button type="button" class="btn btn-primary" onclick="leave('+order.id+')">确认离店</button></td>';
+                    row+='<td><button type="button" class="btn btn-primary" onclick="leave(\''+order.id+'\')">确认离店</button></td>';
                 } else {
                     row += '<td>无</td>';
                 }

@@ -27,7 +27,7 @@ function getOrdersByState(state) {
                 row += '<td>' + order.payMethod + '</td>';
                 row += '<td>' + order.state + '</td>';
                 if (state == 'BOOK') {
-                    row += '<td><button type="button" class="btn btn-primary" onclick="cancel('+order.id+')">退订</button></td>>';
+                    row += '<td><button type="button" class="btn btn-primary" onclick="cancel(\''+order.id+'\')">退订</button></td>>';
                 } else {
                     row += '<td>无</td>';
                 }
@@ -39,6 +39,7 @@ function getOrdersByState(state) {
 }
 
 function cancel(orderId) {
+    console.log(orderId);
     $.ajax({
         type:'post',
         url:'/vip/cancel-order',

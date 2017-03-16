@@ -32,10 +32,11 @@ public class HotelDaoImpl implements HotelDao{
         this.sessionFactory = sessionFactory;
     }
 
-    public List<HotelTblEntity> getAllHotels() {
+    public List<Object[]> getAllHotelIncome() {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from HotelTblEntity ");
-        List<HotelTblEntity> hotels = query.list();
+        Query query = session.createQuery("select t.name, (t.todayIncome+t.totalIncome) as income from HotelTblEntity t where state <> :s ");
+        query.setParameter("s", HotelState.APPLYING);
+        List<Object[]> hotels = query.list();
         session.close();
         return hotels;
     }

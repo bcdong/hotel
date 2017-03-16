@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface HotelService {
 
-    public List<HotelVO> getAllHotels();
+    public List<Object[]> getAllHotelIncome();
 
     public List<HotelVO> getOpenHotels();
 

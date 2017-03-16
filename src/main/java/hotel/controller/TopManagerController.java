@@ -1,21 +1,20 @@
 package hotel.controller;
 
 import hotel.service.HotelService;
-import hotel.service.ManagerService;
+import hotel.service.VipService;
 import hotel.vo.HotelIncomeVO;
 import hotel.vo.HotelVO;
-import hotel.vo.ManagerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mr.Zero on 2017/3/5.
@@ -25,12 +24,12 @@ import java.util.List;
 public class TopManagerController {
 
     private HotelService hotelService;
-    private ManagerService managerService;
+    private VipService vipService;
 
     @Autowired
-    public TopManagerController(HotelService hotelService, ManagerService managerService) {
+    public TopManagerController(HotelService hotelService, VipService vipService) {
         this.hotelService = hotelService;
-        this.managerService = managerService;
+        this.vipService = vipService;
     }
 
     @RequestMapping(value = "/check-apply", method = RequestMethod.GET)
@@ -66,20 +65,38 @@ public class TopManagerController {
     public String getHotelLiveState(Model model) {
         return "manager/topCheckStatus";
     }
+
     @RequestMapping(value = "/get-hotel-count", method = RequestMethod.GET)
     @ResponseBody
     public List<Object[]> getHotelLiveCount(){
         return hotelService.getHotelLiveStatus();
     }
 
-    @RequestMapping(value = "check-vip", method = RequestMethod.GET)
+    @RequestMapping(value = "/check-vip", method = RequestMethod.GET)
     public String getVipStatistic() {
-        return "";
+        return "manager/topCheckVip";
+    }
+
+    @RequestMapping(value = "/get-vip-statistic", method = RequestMethod.GET)
+    @ResponseBody
+    public Map getVipOrderCount() {
+        List<Object[]> orderCount = vipService.getVipOrderCount();
+        List<Object[]> vipCost = vipService.getVipCost();
+        Map<String,List> map = new HashMap<>();
+        map.put("orderCount", orderCount);
+        map.put("vipCost", vipCost);
+        return map;
     }
 
     @RequestMapping(value = "check-finance", method = RequestMethod.GET)
     public String getFinance() {
-        return "";
+        return "manager/topCheckFinance";
+    }
+
+    @RequestMapping(value = "get-hotel-income", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Object[]> getAllHotelIncome() {
+        return hotelService.getAllHotelIncome();
     }
 
 //    @RequestMapping(value = "/add-manager", method = RequestMethod.GET)

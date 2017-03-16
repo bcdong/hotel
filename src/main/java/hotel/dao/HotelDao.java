@@ -14,7 +14,7 @@ public interface HotelDao {
 
     public HotelTblEntity getHotel(int id);
 
-    public List<HotelTblEntity> getAllHotels();
+    public List<Object[]> getAllHotelIncome();
 
     public List<HotelTblEntity> getOpenHotels();
 

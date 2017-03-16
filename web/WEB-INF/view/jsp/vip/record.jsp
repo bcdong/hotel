@@ -74,7 +74,7 @@
                                 <td>${order.payMethod}</td>
                                 <td>${order.state}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" onclick="cancel(${order.id})">退订</button>
+                                    <button type="button" class="btn btn-primary" onclick="cancel('${order.id}')">退订</button>
                                 </td>
                             </tr>
                         </c:forEach>

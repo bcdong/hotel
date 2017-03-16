@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Mr.Zero on 2017/3/2.
@@ -224,6 +225,16 @@ public class VipServiceImpl implements VipService {
         OrderTblEntity orderPO = orderVO2PO(orderVO, payMethod, vipPO, hotelPO);
         orderDao.addOrder(orderPO);
         return OrderResult.SUCCESS;
+    }
+
+    @Override
+    public List<Object[]> getVipOrderCount() {
+        return vipDao.getVipOrderCount();
+    }
+
+    @Override
+    public List<Object[]> getVipCost() {
+        return vipDao.getVipCost();
     }
 
     private RoomType transferRoomType(String ch) {
