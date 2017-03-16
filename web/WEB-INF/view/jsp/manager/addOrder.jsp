@@ -1,5 +1,4 @@
 <%--@elvariable id="managerInfo" type="hotel.vo.ManagerVO"--%>
-<%--@elvariable id="hotelVO" type="hotel.vo.HotelVO"--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,8 +16,8 @@
             <li><a href="/sbmanager/orders">住房管理</a></li>
             <li><a href="/sbmanager/hotel-plan">酒店概况</a></li>
             <li><a href="/sbmanager/statistic">统计信息</a></li>
-            <li class="active"><a href="/sbmanager/open-hotel">开店申请</a></li>
-            <li><a href="/sbmanager/add-order">非会员入住</a></li>
+            <li><a href="/sbmanager/open-hotel">开店申请</a></li>
+            <li class="active"><a href="/sbmanager/add-order">非会员入住</a></li>
         </ul>
     </div>
 </section>
@@ -42,8 +41,8 @@
     </div>
     <div class="content">
         <div class="content-header">
-            <h1>开店申请</h1>
-            <p>经理: ${managerInfo.name}    酒店名称:
+            <h1>酒店管理</h1>
+            <p>经理: ${managerInfo.name}             酒店名称:
                 <c:choose>
                     <c:when test="${managerInfo.hotel == null}">
                         暂无酒店
@@ -54,19 +53,21 @@
                 </c:choose>
             </p>
         </div>
-        <c:choose>
-            <c:when test="${managerInfo.hotel != null}">
-                <h2>对不起，您已开过酒店! </h2>
-            </c:when>
-            <c:otherwise>
-                <sf:form action="/sbmanager/open-hotel" method="POST" commandName="hotelVO">
-                    酒店名称: <sf:input path="name" />
-                    <sf:errors path="name" cssClass="error"/><br/>
-                    酒店地址: <sf:input path="address" /><br/>
-                    <input type="submit" value="提交">
-                </sf:form>
-            </c:otherwise>
-        </c:choose>
+        <c:if test="${managerInfo.hotel != null && (managerInfo.hotel.state == '营业中')}">
+            <form action="/sbmanager/add-order" method="post">
+                入住日期：<input type="date" name="fromTime"><br/>
+                离店日期：<input type="date" name="toTime"><br/>
+                房间类型：<select name="roomType">
+                <option value="单人间" selected="selected">单人间</option>
+                <option value="双人间">双人间</option>
+                <option value="三人间">三人间</option>
+            </select><br/>
+                价格：<input type="text" name="costBeforeDiscount"><br/>
+                房间号：<input type="text" name="roomId"><br/>
+                入住人员：<input type="text" name="customer"><br/>
+                <input type="submit" value="提交">
+            </form>
+        </c:if>
     </div>
 </section>
 </body>

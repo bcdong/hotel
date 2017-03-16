@@ -172,8 +172,13 @@ public class PO2VO {
             case VIP_CARD:
                 default:vo.setPayMethod("会员卡");break;
         }
-        vo.setVipId(df.format(po.getVipTblByVipId().getId()));
-        vo.setVipName(po.getVipTblByVipId().getName());
+        if (po.getVipTblByVipId()!=null) {
+            vo.setVipId(df.format(po.getVipTblByVipId().getId()));
+            vo.setVipName(po.getVipTblByVipId().getName());
+        } else {
+            vo.setVipId("-1");
+            vo.setVipName("非会员");
+        }
         return vo;
     }
 }

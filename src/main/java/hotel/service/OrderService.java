@@ -25,4 +25,6 @@ public interface OrderService {
 
     public boolean cancelOrder(String orderId);
 
+    public boolean addOrder(OrderVO vo);
+
 }

@@ -31,4 +31,6 @@ public interface HotelDao {
     public boolean jieSuanHotel(int hotelId);
 
     public List<HotelTblEntity> getHotelWithITodayncome();
+
+    public void updateHotel(HotelTblEntity po);
 }

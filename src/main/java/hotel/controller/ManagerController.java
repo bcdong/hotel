@@ -165,4 +165,18 @@ public class ManagerController {
     public boolean handleLeave(@RequestParam("orderId") String orderId) {
         return orderService.updateOrderState(orderId, "LEAVE");
     }
+
+    @RequestMapping(value = "/add-order", method = RequestMethod.GET)
+    public String getOrderHotel() {
+        return "manager/addOrder";
+    }
+
+    @RequestMapping(value = "/add-order", method = RequestMethod.POST)
+    public String postOrderHotel(OrderVO orderVO, HttpSession session) {
+        ManagerVO managerInfo = (ManagerVO) session.getAttribute("managerInfo");
+        orderVO.setHotelId(managerInfo.getHotel().getId());
+        orderVO.setHotelName(managerInfo.getHotel().getName());
+        orderService.addOrder(orderVO);
+        return "redirect:/sbmanager/orders";
+    }
 }

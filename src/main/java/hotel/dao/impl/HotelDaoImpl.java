@@ -180,4 +180,13 @@ public class HotelDaoImpl implements HotelDao{
         roomPlan.setHotelTblByHotelId(belongedHotel);
         return roomPlan;
     }
+
+    @Override
+    public void updateHotel(HotelTblEntity po) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.merge(po);
+        tx.commit();
+        session.close();
+    }
 }

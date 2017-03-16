@@ -17,6 +17,7 @@
             <li><a href="/sbmanager/hotel-plan">酒店概况</a></li>
             <li class="active"><a href="/sbmanager/statistic">统计信息</a></li>
             <li><a href="/sbmanager/open-hotel">开店申请</a></li>
+            <li><a href="/sbmanager/add-order">非会员入住</a></li>
         </ul>
     </div>
 </section>
